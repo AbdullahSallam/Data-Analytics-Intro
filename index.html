@@ -1,0 +1,2225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مذكرة تدريبية: تحليل البيانات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d1b2a;
+  --deep: #1b2d45;
+  --blue: #1a6faf;
+  --sky: #2196f3;
+  --cyan: #00bcd4;
+  --teal: #009688;
+  --gold: #f0a500;
+  --amber: #ff8f00;
+  --light: #f0f6ff;
+  --white: #ffffff;
+  --gray: #546e7a;
+  --muted: #90a4ae;
+  --surface: #e8f4fd;
+  --border: #cde0f0;
+  --text: #1a2a3a;
+  --radius: 16px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 24px rgba(13,27,42,0.10);
+  --shadow-lg: 0 8px 40px rgba(13,27,42,0.16);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Tajawal', 'Cairo', sans-serif;
+  background: #f4f8fd;
+  color: var(--text);
+  line-height: 1.9;
+  font-size: 17px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #0a3259 40%, #0d4f8f 70%, #1a6faf 100%);
+  color: white;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0L80 12v2L54 40h-2zm4 0L80 16v2L58 40h-2zm4 0L80 20v2L62 40h-2zm4 0L80 24v2L66 40h-2zm4 0L80 28v2L70 40h-2zm4 0L80 32v2L74 40h-2zm4 0L80 36v2L78 40h-2zm4 0L80 40v0z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 60px 40px 40px;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #a8d8ff;
+  padding: 6px 20px;
+  border-radius: 50px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+}
+.hero h1 {
+  font-family: 'Cairo', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.hero h1 span { color: var(--gold); }
+.hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 32px;
+}
+.author-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius);
+  padding: 16px 28px;
+  text-align: right;
+  margin-bottom: 28px;
+}
+.author-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--amber));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(240,165,0,0.4);
+}
+.author-info { text-align: right; }
+.author-name {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: white;
+}
+.author-title {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.70);
+  margin-bottom: 8px;
+}
+.social-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+}
+.social-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+.social-btn.x-btn { background: rgba(0,0,0,0.35); }
+.social-btn.fb-btn { background: rgba(24,119,242,0.5); }
+.social-btn.li-btn { background: rgba(10,102,194,0.5); }
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.stat-item { text-align: center; }
+.stat-num { font-size: 1.8rem; font-weight: 900; color: var(--gold); }
+.stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+
+/* ── NAV ── */
+.toc-nav {
+  background: var(--navy);
+  padding: 14px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+.toc-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.toc-inner::-webkit-scrollbar { display: none; }
+.nav-link {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 50px;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.nav-link:hover, .nav-link.active {
+  background: var(--blue);
+  color: white;
+}
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section {
+  padding: 64px 0;
+}
+section:nth-child(even) {
+  background: white;
+}
+section:nth-child(odd) {
+  background: #f4f8fd;
+}
+
+/* ── SECTION HEADERS ── */
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.section-num {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  color: white;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  font-weight: 900;
+  line-height: 44px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(26,111,175,0.35);
+}
+.section-title {
+  font-family: 'Cairo', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 900;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.section-title span { color: var(--blue); }
+.section-line {
+  width: 64px; height: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+/* ── DOMAIN CARDS ── */
+.domains-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+.domain-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 28px;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.domain-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 4px; height: 100%;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.domain-card:nth-child(1)::before { background: #e53935; }
+.domain-card:nth-child(2)::before { background: #1e88e5; }
+.domain-card:nth-child(3)::before { background: #43a047; }
+.domain-card:nth-child(4)::before { background: #fb8c00; }
+.domain-card:nth-child(5)::before { background: #8e24aa; }
+.domain-card:nth-child(6)::before { background: #00897b; }
+.domain-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.domain-icon {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+  display: block;
+}
+.domain-title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.domain-text { font-size: 0.92rem; color: var(--gray); line-height: 1.7; }
+
+/* ── QUOTE ── */
+.quote-block {
+  background: var(--light);
+  border-right: 5px solid var(--blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 24px 28px;
+  margin: 24px 0;
+  position: relative;
+}
+.quote-block::before {
+  content: '❝';
+  position: absolute;
+  top: -10px; right: 16px;
+  font-size: 3rem;
+  color: var(--blue);
+  opacity: 0.2;
+  line-height: 1;
+}
+.quote-text {
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--deep);
+  font-weight: 500;
+  line-height: 1.8;
+}
+.quote-source {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--gray);
+  font-weight: 600;
+}
+
+/* ── LIFECYCLE VISUAL ── */
+.lifecycle-svg-wrapper {
+  background: white;
+  border-radius: var(--radius);
+  padding: 32px 16px;
+  box-shadow: var(--shadow);
+  margin: 40px 0;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+.lifecycle-svg-wrapper svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+/* ── PHASE CARDS ── */
+.phases-list { display: flex; flex-direction: column; gap: 24px; margin-top: 32px; }
+.phase-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: box-shadow 0.3s;
+}
+.phase-card:hover { box-shadow: var(--shadow-lg); }
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 28px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #f8fbff, white);
+}
+.phase-num {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.phase-title-group { flex: 1; }
+.phase-title { font-weight: 800; font-size: 1.1rem; color: var(--navy); }
+.phase-en { font-size: 0.82rem; color: var(--gray); }
+.phase-body { padding: 0 28px 28px; display: block; }
+.phase-desc { color: var(--gray); margin-bottom: 16px; font-size: 0.95rem; line-height: 1.8; }
+
+/* Phase colors */
+.ph-1 { background: linear-gradient(135deg, #e53935, #c62828); }
+.ph-2 { background: linear-gradient(135deg, #fb8c00, #e65100); }
+.ph-3 { background: linear-gradient(135deg, #fdd835, #f9a825); }
+.ph-4 { background: linear-gradient(135deg, #43a047, #2e7d32); }
+.ph-5 { background: linear-gradient(135deg, #1e88e5, #1565c0); }
+.ph-6 { background: linear-gradient(135deg, #8e24aa, #6a1b9a); }
+.ph-7 { background: linear-gradient(135deg, #00897b, #00695c); }
+
+/* Example box */
+.example-box {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  border: 1px solid #c8e6c9;
+  border-radius: var(--radius-sm);
+  padding: 20px 22px;
+  margin: 14px 0;
+}
+.example-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #2e7d32;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.example-text { font-size: 0.93rem; color: #1b5e20; line-height: 1.7; }
+
+/* Steps list */
+.steps-list { list-style: none; padding: 0; }
+.steps-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 0.93rem;
+  color: var(--text);
+  border-bottom: 1px dashed var(--border);
+}
+.steps-list li:last-child { border-bottom: none; }
+.step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--blue);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+.step-dot.red { background: #e53935; }
+.step-dot.orange { background: #fb8c00; }
+.step-dot.green { background: #43a047; }
+
+/* ── ANATOMY ── */
+.anatomy-section { padding: 40px 0; }
+.anatomy-svg-box {
+  background: white;
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin: 32px 0;
+  overflow-x: auto;
+}
+.anatomy-terms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.term-card {
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--blue);
+  transition: all 0.2s;
+}
+.term-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.term-ar { font-weight: 800; font-size: 1rem; color: var(--navy); }
+.term-en { font-size: 0.8rem; color: var(--blue); font-weight: 600; margin-bottom: 6px; font-family: 'IBM Plex Mono', monospace; }
+.term-def { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+
+/* ── GLOSSARY ── */
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.gloss-card {
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 22px;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.gloss-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s;
+}
+.gloss-card:hover::after { transform: scaleX(1); }
+.gloss-card:hover { box-shadow: var(--shadow); }
+.gloss-en { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; color: var(--blue); font-weight: 700; margin-bottom: 4px; }
+.gloss-ar { font-weight: 800; font-size: 1.05rem; color: var(--navy); margin-bottom: 8px; }
+.gloss-def { font-size: 0.88rem; color: var(--gray); line-height: 1.65; }
+.gloss-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 50px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 8px;
+  background: var(--surface);
+  color: var(--blue);
+}
+
+/* ── IMPORTANCE / FAILURE CARDS ── */
+.importance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+.imp-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.imp-icon { font-size: 2rem; margin-bottom: 10px; }
+.imp-title { font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+.imp-text { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+
+.failure-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  border: 1px solid #ffcdd2;
+}
+.failure-header {
+  background: linear-gradient(135deg, #c62828, #b71c1c);
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.failure-badge {
+  background: rgba(255,255,255,0.2);
+  padding: 3px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.failure-title-text { font-weight: 800; font-size: 1rem; }
+.failure-body {
+  background: #fff8f8;
+  padding: 20px 24px;
+}
+.failure-story { font-size: 0.93rem; color: var(--text); line-height: 1.8; margin-bottom: 14px; }
+.lesson-box {
+  background: #fff3e0;
+  border-right: 4px solid var(--amber);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  color: #4e342e;
+}
+.lesson-label { font-weight: 800; color: var(--amber); margin-bottom: 4px; font-size: 0.8rem; }
+
+/* ── SMART GRID ── */
+.smart-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin: 24px 0;
+}
+@media (max-width: 700px) { .smart-grid { grid-template-columns: repeat(2, 1fr); } }
+.smart-item {
+  background: linear-gradient(135deg, var(--navy), var(--deep));
+  color: white;
+  border-radius: var(--radius-sm);
+  padding: 20px 14px;
+  text-align: center;
+}
+.smart-letter { font-size: 2rem; font-weight: 900; color: var(--gold); }
+.smart-word { font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-bottom: 4px; }
+.smart-ar { font-size: 0.82rem; font-weight: 700; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 40px 24px;
+  font-size: 0.88rem;
+}
+footer a { color: var(--gold); text-decoration: none; }
+footer .footer-author { font-weight: 700; color: white; font-size: 1rem; margin-bottom: 8px; }
+
+/* ── UTILITIES ── */
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.mt-6 { margin-top: 24px; }
+p { margin-bottom: 14px; line-height: 1.9; }
+.highlight { background: linear-gradient(120deg, #bbdefb 0%, #e3f2fd 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+.en-term { font-family: 'IBM Plex Mono', monospace; font-size: 0.88em; color: var(--blue); font-weight: 600; }
+
+/* ── INTRO IMPORTANCE ── */
+.importance-banner {
+  background: linear-gradient(135deg, var(--navy), #0d4080);
+  color: white;
+  border-radius: var(--radius);
+  padding: 32px;
+  margin: 32px 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.importance-banner .big-icon { font-size: 3rem; }
+.importance-banner h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+.importance-banner p { color: rgba(255,255,255,0.8); font-size: 0.95rem; margin: 0; }
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 1.8rem; }
+  .author-card { flex-direction: column; text-align: center; }
+  .smart-grid { grid-template-columns: repeat(3, 1fr); }
+  .domains-grid { grid-template-columns: 1fr; }
+  .lifecycle-svg-wrapper svg { min-width: 650px; }
+  .anatomy-svg-box svg { min-width: 680px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">📊 مذكرة تدريبية تفاعلية</div>
+    <h1>تحليل <span>البيانات</span><br><small style="font-size:0.55em;font-weight:400;color:rgba(255,255,255,0.7)">Data Analysis</small></h1>
+    <p class="hero-sub">من المبادئ الأساسية إلى التطبيق العملي — دليل شامل ومُصوَّر</p>
+
+    <div class="author-card">
+      <div class="author-avatar">ع</div>
+      <div class="author-info">
+        <div class="author-name">المهندس عبدالله عبد الملك سلام</div>
+        <div class="author-title">متخصص في التحليلات وذكاء الأعمال · Business Intelligence & Analytics</div>
+        <div class="social-links">
+          <a href="#" class="social-btn x-btn" title="X (Twitter)">𝕏</a>
+          <a href="#" class="social-btn fb-btn" title="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="white" style="vertical-align:middle"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="#" class="social-btn li-btn" title="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="white" style="vertical-align:middle"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">مراحل الدورة</div></div>
+      <div class="stat-item"><div class="stat-num">14+</div><div class="stat-label">مثالاً تطبيقياً</div></div>
+      <div class="stat-item"><div class="stat-num">40+</div><div class="stat-label">مصطلحاً في المسرد</div></div>
+      <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">قطاعات تطبيقية</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ STICKY NAV ══════════ -->
+<nav class="toc-nav">
+  <div class="toc-inner">
+    <a href="#dikw" class="nav-link">هرم المعرفة</a>
+    <a href="#intro" class="nav-link">المقدمة</a>
+    <a href="#definition" class="nav-link">التعريف</a>
+    <a href="#lifecycle" class="nav-link">دورة الحياة</a>
+    <a href="#anatomy" class="nav-link">تشريح البيانات</a>
+    <a href="#importance" class="nav-link">أهمية المراحل</a>
+    <a href="#failures" class="nav-link">أمثلة الإخفاقات</a>
+    <a href="#glossary" class="nav-link">المسرد</a>
+    <a href="#bi" class="nav-link">ذكاء الأعمال</a>
+    <a href="#skills" class="nav-link">مهارات المحلل</a>
+  </div>
+</nav>
+
+<!-- ══════════ SECTION 0.5: DIKW PYRAMID ══════════ -->
+<section id="dikw" style="background:white;">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num" style="background:linear-gradient(135deg,#6a1b9a,#4a148c);">◈</div>
+    <h2 class="section-title">ما هي <span>البيانات</span>؟ — هرم المعرفة</h2>
+    <div class="section-line" style="background:linear-gradient(90deg,#6a1b9a,#ab47bc);"></div>
+    <p style="color:var(--gray);margin-top:12px;font-size:0.95rem;">DIKW Pyramid — التمييز بين البيانات والمعلومات والمعرفة والحكمة</p>
+  </div>
+
+  <p>قبل أن نتحدث عن تحليل البيانات، لا بد أن نفهم أولاً <strong>ما هي البيانات</strong> وكيف تختلف عن المعلومات والمعرفة. يُقدّم لنا <strong>هرم المعرفة DIKW</strong> إطاراً بالغ الأهمية لفهم هذا التدرّج.</p>
+
+  <!-- DIKW SVG Pyramid -->
+  <div class="lifecycle-svg-wrapper" style="margin:32px 0;">
+    <svg viewBox="0 0 860 440" xmlns="http://www.w3.org/2000/svg" font-family="Tajawal, Cairo, sans-serif">
+      <defs>
+        <linearGradient id="pyr-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f8f4ff"/>
+          <stop offset="100%" stop-color="#f0f6ff"/>
+        </linearGradient>
+        <linearGradient id="w-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7b1fa2"/>
+          <stop offset="100%" stop-color="#4a148c"/>
+        </linearGradient>
+        <linearGradient id="k-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#1565c0"/>
+          <stop offset="100%" stop-color="#0d47a1"/>
+        </linearGradient>
+        <linearGradient id="i-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#00838f"/>
+          <stop offset="100%" stop-color="#006064"/>
+        </linearGradient>
+        <linearGradient id="d-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#2e7d32"/>
+          <stop offset="100%" stop-color="#1b5e20"/>
+        </linearGradient>
+      </defs>
+      <rect width="860" height="440" rx="14" fill="url(#pyr-bg)"/>
+
+      <!-- Title -->
+      <text x="430" y="30" text-anchor="middle" font-size="16" font-weight="900" fill="#0d1b2a">هرم المعرفة — DIKW Pyramid</text>
+      <text x="430" y="48" text-anchor="middle" font-size="11" fill="#546e7a">Data → Information → Knowledge → Wisdom</text>
+
+      <!-- PYRAMID LAYERS (drawn bottom to top) -->
+      <!-- Layer D: Data (bottom, widest) -->
+      <polygon points="100,400 760,400 680,320 180,320" fill="url(#d-grad)" opacity="0.92"/>
+      <text x="430" y="368" text-anchor="middle" font-size="20" font-weight="900" fill="white">البيانات — Data</text>
+      <text x="430" y="388" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.8)">«ماذا حدث؟» — الحقائق الخام غير المُعالَجة</text>
+
+      <!-- Layer I: Information -->
+      <polygon points="180,320 680,320 600,240 260,240" fill="url(#i-grad)" opacity="0.93"/>
+      <text x="430" y="288" text-anchor="middle" font-size="18" font-weight="900" fill="white">المعلومات — Information</text>
+      <text x="430" y="307" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.8)">«ماذا يعني ذلك؟» — بيانات مُعالَجة ومُنظَّمة</text>
+
+      <!-- Layer K: Knowledge -->
+      <polygon points="260,240 600,240 530,160 330,160" fill="url(#k-grad)" opacity="0.93"/>
+      <text x="430" y="206" text-anchor="middle" font-size="16" font-weight="900" fill="white">المعرفة — Knowledge</text>
+      <text x="430" y="224" text-anchor="middle" font-size="10.5" fill="rgba(255,255,255,0.8)">«كيف نستخدم ذلك؟»</text>
+
+      <!-- Layer W: Wisdom (apex) -->
+      <polygon points="330,160 530,160 430,80" fill="url(#w-grad)" opacity="0.95"/>
+      <text x="430" y="128" text-anchor="middle" font-size="14" font-weight="900" fill="white">الحكمة</text>
+      <text x="430" y="146" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.8)">Wisdom</text>
+
+      <!-- Left annotations -->
+      <line x1="98" y1="360" x2="60" y2="360" stroke="#2e7d32" stroke-width="1.5"/>
+      <text x="56" y="345" text-anchor="middle" font-size="9" fill="#2e7d32" font-weight="700">أوسع نطاقاً</text>
+      <text x="56" y="358" text-anchor="middle" font-size="8" fill="#2e7d32">(Abundant)</text>
+      <line x1="178" y1="280" x2="60" y2="280" stroke="#00838f" stroke-width="1.5"/>
+      <line x1="258" y1="200" x2="60" y2="200" stroke="#1565c0" stroke-width="1.5"/>
+      <line x1="328" y1="120" x2="60" y2="120" stroke="#7b1fa2" stroke-width="1.5"/>
+      <text x="56" y="108" text-anchor="middle" font-size="9" fill="#7b1fa2" font-weight="700">أندر وأعمق</text>
+      <text x="56" y="121" text-anchor="middle" font-size="8" fill="#7b1fa2">(Rare)</text>
+
+      <!-- Right side: Example labels -->
+      <rect x="680" y="65" width="168" height="340" rx="10" fill="white" stroke="#e0e7ef" stroke-width="1"/>
+      <text x="764" y="85" text-anchor="middle" font-size="11" font-weight="900" fill="#0d1b2a">مثال: المستشفى</text>
+      <line x1="692" y1="93" x2="836" y2="93" stroke="#e8f4fd" stroke-width="1"/>
+
+      <text x="764" y="113" text-anchor="middle" font-size="9" fill="#7b1fa2" font-weight="800">الحكمة:</text>
+      <text x="764" y="128" text-anchor="middle" font-size="8.5" fill="#546e7a">سياسة الوقاية تُوفّر</text>
+      <text x="764" y="141" text-anchor="middle" font-size="8.5" fill="#546e7a">أكثر من العلاج</text>
+
+      <line x1="692" y1="152" x2="836" y2="152" stroke="#f0f0f0" stroke-width="1"/>
+      <text x="764" y="170" text-anchor="middle" font-size="9" fill="#1565c0" font-weight="800">المعرفة:</text>
+      <text x="764" y="185" text-anchor="middle" font-size="8.5" fill="#546e7a">المرضى فوق 60 عاماً</text>
+      <text x="764" y="198" text-anchor="middle" font-size="8.5" fill="#546e7a">بضغط مرتفع = خطر</text>
+
+      <line x1="692" y1="210" x2="836" y2="210" stroke="#f0f0f0" stroke-width="1"/>
+      <text x="764" y="228" text-anchor="middle" font-size="9" fill="#00838f" font-weight="800">المعلومات:</text>
+      <text x="764" y="243" text-anchor="middle" font-size="8.5" fill="#546e7a">30% من المرضى</text>
+      <text x="764" y="256" text-anchor="middle" font-size="8.5" fill="#546e7a">لديهم ضغط مرتفع</text>
+
+      <line x1="692" y1="268" x2="836" y2="268" stroke="#f0f0f0" stroke-width="1"/>
+      <text x="764" y="288" text-anchor="middle" font-size="9" fill="#2e7d32" font-weight="800">البيانات:</text>
+      <text x="764" y="305" text-anchor="middle" font-size="8.5" fill="#546e7a">140/90, 138/88,</text>
+      <text x="764" y="318" text-anchor="middle" font-size="8.5" fill="#546e7a">145/92, 132/86...</text>
+      <text x="764" y="333" text-anchor="middle" font-size="8" fill="#90a4ae">(قراءات ضغط الدم)</text>
+
+      <!-- Bottom label -->
+      <text x="430" y="428" text-anchor="middle" font-size="10" fill="#90a4ae">تحليل البيانات هو الجسر الذي يحوّل البيانات الخام إلى معلومات ومعرفة قابلة للتطبيق</text>
+    </svg>
+  </div>
+
+  <!-- Definitions grid -->
+  <div class="domains-grid" style="margin-top:8px;">
+    <div class="domain-card" style="border-right:4px solid #2e7d32;">
+      <span class="domain-icon">🔢</span>
+      <div class="domain-title">البيانات <span class="en-term">(Data)</span></div>
+      <div class="domain-text">حقائق خام وأرقام وملاحظات لم تُعالَج بعد ولا معنى لها بمفردها. لا تجيب على أي سؤال — إنها المادة الخام فقط.<br><br>
+      <strong>أمثلة حقيقية:</strong><br>
+      • <span style="color:#2e7d32">37.2 — 36.8 — 38.5</span> → قراءات حرارة مرضى<br>
+      • <span style="color:#2e7d32">1, 0, 1, 1, 0</span> → سجلات دخول وخروج مستودع<br>
+      • <span style="color:#2e7d32">«أحمد»، «سارة»، «مكة»</span> → بيانات نصية<br>
+      • <span style="color:#2e7d32">2024-03-15 09:42</span> → طابع زمني لمعاملة مالية</div>
+    </div>
+    <div class="domain-card" style="border-right:4px solid #00838f;">
+      <span class="domain-icon">💡</span>
+      <div class="domain-title">المعلومات <span class="en-term">(Information)</span></div>
+      <div class="domain-text">بيانات مُعالَجة ومُنظَّمة في سياق يمنحها معنى. تجيب على سؤال «ماذا؟».<br><br>
+      <strong>أمثلة حقيقية:</strong><br>
+      • <span style="color:#00838f">«15% من المرضى أُعيدوا للمستشفى خلال 30 يوماً»</span><br>
+      • <span style="color:#00838f">«مبيعات فرع الرياض انخفضت 8% في رمضان»</span><br>
+      • <span style="color:#00838f">«متوسط وقت تسليم الطلب 42 دقيقة»</span><br>
+      • <span style="color:#00838f">«نسبة العملاء الراضين 78%»</span></div>
+    </div>
+    <div class="domain-card" style="border-right:4px solid #1565c0;">
+      <span class="domain-icon">🧠</span>
+      <div class="domain-title">المعرفة <span class="en-term">(Knowledge)</span></div>
+      <div class="domain-text">فهم الأنماط والعلاقات السببية بين المعلومات مع الخبرة. تجيب على «لماذا؟» و«كيف؟».<br><br>
+      <strong>أمثلة حقيقية:</strong><br>
+      • <span style="color:#1565c0">«المرضى الذين لا يتلقون تعليمات واضحة عند الخروج معدلات عودتهم أعلى»</span><br>
+      • <span style="color:#1565c0">«انخفاض مبيعات رمضان يرتبط بتغير ساعات الدوام لا بانخفاض الطلب»</span><br>
+      • <span style="color:#1565c0">«التأخر فوق 50 دقيقة يُقلّل رضا العميل بشكل حاد»</span></div>
+    </div>
+  </div>
+
+  <div class="importance-banner" style="background:linear-gradient(135deg,#4a148c,#1a237e);margin-top:28px;">
+    <div class="big-icon">🔺</div>
+    <div>
+      <h3>دور تحليل البيانات في الهرم</h3>
+      <p style="color:rgba(255,255,255,0.85)">تحليل البيانات هو العملية التي <strong>تصعد بنا في الهرم</strong>: من البيانات الخام إلى المعلومات ذات المعنى، ثم إلى المعرفة القابلة للتطبيق. بدون تحليل، تظل البيانات مجرد أرقام عديمة القيمة.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ SECTION 1: INTRO ══════════ -->
+<section id="intro">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">١</div>
+    <h2 class="section-title">أهمية <span>تحليل البيانات</span> وتطبيقاته</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p>نعيش اليوم في عصر يُعرف بـ <strong>«عصر البيانات»</strong> <span class="en-term">(Data Age)</span>، حيث تتولّد كميات هائلة من البيانات في كل لحظة — من التفاعلات الرقمية، وأجهزة الاستشعار <span class="en-term">(Sensors)</span>، والمعاملات التجارية، ومنصات التواصل الاجتماعي. وفي ظل هذا الفيضان المعلوماتي، برز <strong>تحليل البيانات</strong> <span class="en-term">(Data Analysis)</span> بوصفه الأداة الأكثر أهمية لاستخلاص المعرفة واتخاذ القرارات الذكية.</p>
+
+  <div class="importance-banner">
+    <div class="big-icon">💡</div>
+    <div>
+      <h3>لماذا تحليل البيانات مهم؟</h3>
+      <p>يحوّل تحليل البيانات البيانات الخام <span class="en-term">(Raw Data)</span> إلى رؤى قابلة للتنفيذ <span class="en-term">(Actionable Insights)</span> — وهو ما يُغيّر طريقة اتخاذ القرارات في المؤسسات والحكومات والأفراد.</p>
+    </div>
+  </div>
+
+  <!-- 3 real-world examples of why data analysis matters -->
+  <div style="margin:20px 0 32px;">
+    <div class="failure-card" style="border-color:#bbdefb;">
+      <div class="failure-header" style="background:linear-gradient(135deg,#1565c0,#0d47a1);">
+        <div><div class="failure-badge">مثال — الرعاية الصحية</div>
+        <div class="failure-title-text">كيف أنقذ تحليل البيانات آلاف الأرواح في بريطانيا (NHS)</div></div>
+        <div style="font-size:2rem;margin-right:auto">🏥</div>
+      </div>
+      <div class="failure-body" style="background:#f5faff;">
+        <p class="failure-story">لاحظت هيئة الخدمات الصحية البريطانية (NHS) ارتفاعاً في وفيات المرضى في بعض المستشفيات. بتحليل بيانات مئات الآلاف من سجلات المرضى، اكتُشف أن المستشفيات التي تعاني نقصاً في طاقم الممرضين ليلاً لديها وفيات أعلى بـ 13%. أدى هذا مباشرةً إلى سياسة إلزامية بتحديد حد أدنى للممرضين في كل نوبة — قرار كان مستحيلاً بدون البيانات لأن الإدارة كانت تظن المشكلة في التجهيزات الطبية وليس التوظيف.</p>
+        <div class="lesson-box" style="border-color:#42a5f5;background:#e3f2fd;"><div class="lesson-label" style="color:#1976d2;">💡 الدرس</div>البيانات كشفت العلاقة السببية الحقيقية وحوّلتها إلى سياسة منقذة للأرواح.</div>
+      </div>
+    </div>
+    <div class="failure-card" style="border-color:#c8e6c9;margin-top:14px;">
+      <div class="failure-header" style="background:linear-gradient(135deg,#2e7d32,#1b5e20);">
+        <div><div class="failure-badge">مثال — اللوجستيك</div>
+        <div class="failure-title-text">شركة UPS وتوفير 100 مليون ميل سنوياً بالبيانات</div></div>
+        <div style="font-size:2rem;margin-right:auto">🚚</div>
+      </div>
+      <div class="failure-body" style="background:#f9fff9;">
+        <p class="failure-story">كانت UPS تعتمد على خبرة السائقين في اختيار المسارات. بتحليل بيانات التوصيل، اكتُشف أن الانعطافات اليسرى تستهلك وقت انتظار أطول. ببناء نظام يُقلّل هذه الانعطافات، وفّرت الشركة <strong>100 مليون ميل</strong> سنوياً، وخفّضت استهلاك الوقود بـ 10 ملايين غالون، وقلّلت الانبعاثات بـ 100,000 طن — بقرار بسيط مبني كلياً على البيانات.</p>
+        <div class="lesson-box" style="border-color:#66bb6a;background:#f1f8e9;"><div class="lesson-label" style="color:#43a047;">💡 الدرس</div>البيانات كشفت فرصة كانت مختبئة في العادات اليومية وحوّلتها إلى وفورات ضخمة.</div>
+      </div>
+    </div>
+    <div class="failure-card" style="border-color:#ffe0b2;margin-top:14px;">
+      <div class="failure-header" style="background:linear-gradient(135deg,#e65100,#bf360c);">
+        <div><div class="failure-badge">مثال — القطاع المالي</div>
+        <div class="failure-title-text">بنك HSBC وخفض الاحتيال المالي بـ 60% بالتحليل السلوكي</div></div>
+        <div style="font-size:2rem;margin-right:auto">🏦</div>
+      </div>
+      <div class="failure-body" style="background:#fff8f5;">
+        <p class="failure-story">كان HSBC يعتمد على قواعد ثابتة للكشف عن الاحتيال مما يُعطّل معاملات مشروعة ويُفوّت احتيالاً أكثر تعقيداً. بعد تطبيق أسلوب التحليل الإحصائي السلوكي — مقارنة كل معاملة بنمط سلوك الحساب تاريخياً — انخفض الاحتيال بـ 60%، وانخفضت التنبيهات الكاذبة <span class="en-term">(False Positives)</span> بـ 50% في الوقت ذاته.</p>
+        <div class="lesson-box" style="border-color:#fb8c00;background:#fff8e1;"><div class="lesson-label" style="color:#e65100;">💡 الدرس</div>التحليل القائم على البيانات تجاوز القواعد الجامدة وحقّق حماية أقوى مع تجربة عملاء أفضل.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="importance-grid">
+    <div class="imp-card"><div class="imp-icon">🎯</div><div class="imp-title">قرارات أفضل <span class="en-term">(Better Decisions)</span></div><div class="imp-text">الاستناد إلى الأدلة بدلاً من الحدس <span class="en-term">(Intuition)</span> يُقلل أخطاء القرار.<br><br><strong>مثال:</strong> Netflix تحدد ما تُنتجه استناداً إلى بيانات مشاهدة 260 مليون مشترك — لا بحدس المديرين.</div></div>
+    <div class="imp-card"><div class="imp-icon">⚙️</div><div class="imp-title">كفاءة تشغيلية <span class="en-term">(Operational Efficiency)</span></div><div class="imp-text">تحديد مواطن الهدر وتحسين العمليات وخفض التكاليف.<br><br><strong>مثال:</strong> مستشفى في سنغافورة حلّل بيانات حجز غرف العمليات فوفّر ما يعادل 4 غرف إضافية دون بناء.</div></div>
+    <div class="imp-card"><div class="imp-icon">🏆</div><div class="imp-title">ميزة تنافسية <span class="en-term">(Competitive Advantage)</span></div><div class="imp-text">فهم السوق والعملاء بعمق أكبر يمنح السبق على المنافسين.<br><br><strong>مثال:</strong> نظام التوصية في أمازون — المبني على تحليل سلوك 300 مليون عميل — يُولّد 35% من إجمالي مبيعاتها.</div></div>
+    <div class="imp-card"><div class="imp-icon">🛡️</div><div class="imp-title">إدارة المخاطر <span class="en-term">(Risk Management)</span></div><div class="imp-text">الكشف المبكر عن التهديدات قبل وقوعها.<br><br><strong>مثال:</strong> شركة Shell تُحلّل بيانات أجهزة الاستشعار في خطوط الأنابيب لرصد التآكل المبكر وتجنّب كوارث التسرّب.</div></div>
+    <div class="imp-card"><div class="imp-icon">🚀</div><div class="imp-title">الابتكار <span class="en-term">(Innovation)</span></div><div class="imp-text">اكتشاف فرص جديدة من خلال الأنماط الخفية في البيانات.<br><br><strong>مثال:</strong> Spotify اكتشفت أن المستخدمين يستمعون لموسيقى مختلفة تماماً أثناء التمرين — فأطلقت قوائم تشغيل مخصصة لكل نشاط.</div></div>
+  </div>
+
+  <h3 style="font-weight:800;color:var(--navy);margin:40px 0 20px;font-size:1.3rem;">تطبيقات تحليل البيانات في مختلف المجالات</h3>
+  <div class="domains-grid">
+    <div class="domain-card">
+      <span class="domain-icon">🏥</span>
+      <div class="domain-title">المجال الصحي <span class="en-term">(Healthcare)</span></div>
+      <div class="domain-text">دراسة الأنماط الوبائية، التنبؤ بانتشار الأمراض، وتحليل السجلات الطبية الإلكترونية <span class="en-term">(EHR)</span>.<br><br><strong>مثال:</strong> تحليل أنماط قراءات الحرارة والضغط لتحديد المرضى الأكثر عرضة لمضاعفات ما بعد الجراحة واستدعائهم للمتابعة مبكراً.</div>
+    </div>
+    <div class="domain-card">
+      <span class="domain-icon">🏦</span>
+      <div class="domain-title">المال والمصارف <span class="en-term">(Finance & Banking)</span></div>
+      <div class="domain-text">الكشف عن الاحتيال <span class="en-term">(Fraud Detection)</span>، تقييم الملاءة الائتمانية <span class="en-term">(Credit Scoring)</span>، وإدارة المحافظ الاستثمارية.<br><br><strong>مثال:</strong> رصد معاملة بطاقة ائتمان في دولة مختلفة عن مدينة إقامة العميل وتجميد البطاقة تلقائياً لحين التحقق خلال ثوانٍ.</div>
+    </div>
+    <div class="domain-card">
+      <span class="domain-icon">🛒</span>
+      <div class="domain-title">التجزئة والتجارة <span class="en-term">(Retail & E-Commerce)</span></div>
+      <div class="domain-text">أنظمة التوصية، تحليل سلة الشراء <span class="en-term">(Basket Analysis)</span>، وتحسين سلاسل الإمداد.<br><br><strong>مثال:</strong> Walmart تحلل ملايين إيصالات الشراء يومياً فاكتشفت أن الحفاضات وعلب البيرة تُباع معاً كثيراً أيام الجمعة — فوضعتهما في نفس الممر لزيادة المبيعات.</div>
+    </div>
+    <div class="domain-card">
+      <span class="domain-icon">⚡</span>
+      <div class="domain-title">قطاع الطاقة <span class="en-term">(Energy)</span></div>
+      <div class="domain-text">مراقبة الشبكات في الوقت الفعلي <span class="en-term">(Real-Time Monitoring)</span>، التنبؤ بالطلب، والصيانة التنبؤية.<br><br><strong>مثال:</strong> شركة Saudi Aramco تُحلّل بيانات أجهزة الاستشعار في معدات الضخ للتنبؤ بالأعطال قبل وقوعها بأسابيع، توفيراً لتكاليف إيقاف الإنتاج.</div>
+    </div>
+    <div class="domain-card">
+      <span class="domain-icon">🎓</span>
+      <div class="domain-title">قطاع التعليم <span class="en-term">(Education)</span></div>
+      <div class="domain-text">رصد أداء الطلاب، مسارات تعليمية مخصصة <span class="en-term">(Personalized Learning)</span>، وتقييم المناهج.<br><br><strong>مثال:</strong> منصة Khan Academy تُحلّل كيفية تفاعل الطلاب مع كل مسألة رياضيات — وتُكيّف مستوى الصعوبة التلقائي وتُنبّه المعلم للطلاب المتعثرين.</div>
+    </div>
+    <div class="domain-card">
+      <span class="domain-icon">🚚</span>
+      <div class="domain-title">النقل واللوجستيك <span class="en-term">(Transportation)</span></div>
+      <div class="domain-text">تحسين مسارات التوصيل <span class="en-term">(Route Optimization)</span>، تحليل بيانات الأساطيل، والتنبؤ بالازدحام.<br><br><strong>مثال:</strong> Uber تُحلّل بيانات الطلب والعرض لحظة بلحظة في كل منطقة لتسعير الرحلات ديناميكياً وتوجيه السائقين نحو مناطق الذروة قبل حدوثها.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ SECTION 2: DEFINITION ══════════ -->
+<section id="definition">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">٢</div>
+    <h2 class="section-title">تعريف <span>تحليل البيانات</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p>تتعدد التعريفات الواردة في المراجع الأكاديمية والمهنية لمفهوم تحليل البيانات، وفيما يلي أبرزها:</p>
+
+  <div class="quote-block">
+    <p class="quote-text">«تحليل البيانات هو عملية تفتيش البيانات وتنظيفها وتحويلها ونمذجتها بهدف اكتشاف معلومات مفيدة، وتقديم استنتاجات، ودعم عملية اتخاذ القرار.»</p>
+    <div class="quote-source">— Tukey, J. W. (1977). <em>Exploratory Data Analysis</em>. Addison-Wesley.</div>
+  </div>
+
+  <div class="quote-block">
+    <p class="quote-text">«تحليل البيانات هو العملية التي يتم من خلالها تحويل البيانات الخام إلى معلومات ذات معنى، وذلك باستخدام أساليب إحصائية وحاسوبية متنوعة.»</p>
+    <div class="quote-source">— Provost, F., & Fawcett, T. (2013). <em>Data Science for Business</em>. O'Reilly Media.</div>
+  </div>
+
+  <div class="quote-block">
+    <p class="quote-text">«Data analysis is the process of evaluating data using analytical and logical reasoning to examine each component of the data provided, with the aim of extracting useful information.»</p>
+    <div class="quote-source">— Abramson, J. H. (2011). WINPEPI Updated. <em>European Journal of Epidemiology</em>.</div>
+  </div>
+
+  <div class="quote-block">
+    <p class="quote-text">«تحليل البيانات مجال يعتمد على فنون وعلوم الإحصاء والرياضيات وتقنية المعلومات، بهدف تفسير البيانات وتقديم رؤى تُيسّر اتخاذ القرارات الاستراتيجية.»</p>
+    <div class="quote-source">— IBM Institute for Business Value (2021). <em>The Data-Driven Enterprise</em>.</div>
+  </div>
+
+  <p>يتبين من هذه التعريفات أن تحليل البيانات لا يقتصر على الجانب الرياضي أو الإحصائي فحسب، بل هو <strong>عملية شاملة</strong> تبدأ من فهم السياق <span class="en-term">(Context Understanding)</span> وتنتهي بتوليد قيمة فعلية للمؤسسة.</p>
+</div>
+</section>
+
+<!-- ══════════ SECTION 3: LIFECYCLE ══════════ -->
+<section id="lifecycle">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">٣</div>
+    <h2 class="section-title">دورة حياة <span>تحليل البيانات</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p>تحليل البيانات ليس خطوة واحدة بل منهجية متكاملة تسير وفق <strong>دورة حياة محددة</strong> <span class="en-term">(Life Cycle)</span> تضمن أن تكون النتائج موثوقة وقابلة للتطبيق.</p>
+
+  <!-- LIFECYCLE SVG DIAGRAM -->
+  <div class="lifecycle-svg-wrapper">
+    <svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Tajawal, Cairo, sans-serif">
+      <defs>
+        <linearGradient id="bg-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f8fbff"/>
+          <stop offset="100%" stop-color="#e8f4fd"/>
+        </linearGradient>
+        <!-- Phase gradients -->
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ef5350"/><stop offset="100%" stop-color="#b71c1c"/></linearGradient>
+        <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffa726"/><stop offset="100%" stop-color="#e65100"/></linearGradient>
+        <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffee58"/><stop offset="100%" stop-color="#f9a825"/></linearGradient>
+        <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#66bb6a"/><stop offset="100%" stop-color="#1b5e20"/></linearGradient>
+        <linearGradient id="g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#42a5f5"/><stop offset="100%" stop-color="#0d47a1"/></linearGradient>
+        <linearGradient id="g6" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ab47bc"/><stop offset="100%" stop-color="#4a148c"/></linearGradient>
+        <linearGradient id="g7" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#26a69a"/><stop offset="100%" stop-color="#004d40"/></linearGradient>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#90a4ae"/>
+        </marker>
+      </defs>
+      <rect width="900" height="420" rx="16" fill="url(#bg-grad)"/>
+
+      <!-- Title -->
+      <text x="450" y="38" text-anchor="middle" font-size="18" font-weight="900" fill="#0d1b2a">دورة حياة تحليل البيانات</text>
+      <text x="450" y="58" text-anchor="middle" font-size="13" fill="#546e7a">Data Analysis Life Cycle</text>
+      <line x1="200" y1="66" x2="700" y2="66" stroke="#cde0f0" stroke-width="1"/>
+
+      <!-- Circular flow arrows -->
+      <!-- Top row: phases 1-4 -->
+      <!-- Phase boxes: y=90 for top, y=260 for bottom -->
+
+      <!-- PHASE 1 -->
+      <rect x="30" y="90" width="118" height="100" rx="12" fill="url(#g1)"/>
+      <text x="89" y="120" text-anchor="middle" font-size="22" fill="white">🎯</text>
+      <text x="89" y="145" text-anchor="middle" font-size="11" font-weight="800" fill="white">تحديد المشكلة</text>
+      <text x="89" y="162" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.85)">Problem Statement</text>
+      <text x="89" y="177" text-anchor="middle" font-size="10" font-weight="900" fill="rgba(255,255,255,0.6)">①</text>
+      <!-- Arrow 1→2 -->
+      <path d="M148,140 L178,140" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+      <!-- PHASE 2 -->
+      <rect x="182" y="90" width="118" height="100" rx="12" fill="url(#g2)"/>
+      <text x="241" y="120" text-anchor="middle" font-size="22" fill="white">📥</text>
+      <text x="241" y="145" text-anchor="middle" font-size="11" font-weight="800" fill="white">جمع البيانات</text>
+      <text x="241" y="162" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.85)">Data Collection</text>
+      <text x="241" y="177" text-anchor="middle" font-size="10" font-weight="900" fill="rgba(255,255,255,0.6)">②</text>
+      <!-- Arrow 2→3 -->
+      <path d="M300,140 L330,140" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+      <!-- PHASE 3 -->
+      <rect x="334" y="90" width="118" height="100" rx="12" fill="url(#g3)"/>
+      <text x="393" y="120" text-anchor="middle" font-size="22" fill="white">🧹</text>
+      <text x="393" y="145" text-anchor="middle" font-size="11" font-weight="800" fill="#333">تنظيف البيانات</text>
+      <text x="393" y="162" text-anchor="middle" font-size="9.5" fill="rgba(0,0,0,0.65)">Data Cleaning</text>
+      <text x="393" y="177" text-anchor="middle" font-size="10" font-weight="900" fill="rgba(0,0,0,0.4)">③</text>
+      <!-- Arrow 3→4 -->
+      <path d="M452,140 L482,140" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+      <!-- PHASE 4 -->
+      <rect x="486" y="90" width="118" height="100" rx="12" fill="url(#g4)"/>
+      <text x="545" y="120" text-anchor="middle" font-size="22" fill="white">🔍</text>
+      <text x="545" y="145" text-anchor="middle" font-size="11" font-weight="800" fill="white">استكشاف البيانات</text>
+      <text x="545" y="162" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.85)">EDA</text>
+      <text x="545" y="177" text-anchor="middle" font-size="10" font-weight="900" fill="rgba(255,255,255,0.6)">④</text>
+
+      <!-- Down arrow from phase 4 to phase 5 -->
+      <path d="M545,190 L545,255" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+      <!-- PHASE 5 -->
+      <rect x="486" y="259" width="118" height="100" rx="12" fill="url(#g5)"/>
+      <text x="545" y="289" text-anchor="middle" font-size="22" fill="white">🤖</text>
+      <text x="545" y="314" text-anchor="middle" font-size="11" font-weight="800" fill="white">النمذجة والتحليل</text>
+      <text x="545" y="331" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.85)">Modeling</text>
+      <text x="545" y="346" text-anchor="middle" font-size="10" font-weight="900" fill="rgba(255,255,255,0.6)">⑤</text>
+      <!-- Arrow 5→6 -->
+      <path d="M486,309 L452,309" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+      <!-- PHASE 6 -->
+      <rect x="334" y="259" width="118" height="100" rx="12" fill="url(#g6)"/>
+      <text x="393" y="289" text-anchor="middle" font-size="22" fill="white">✅</text>
+      <text x="393" y="314" text-anchor="middle" font-size="11" font-weight="800" fill="white">التفسير والتحقق</text>
+      <text x="393" y="331" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.85)">Validation</text>
+      <text x="393" y="346" text-anchor="middle" font-size="10" font-weight="900" fill="rgba(255,255,255,0.6)">⑥</text>
+      <!-- Arrow 6→7 -->
+      <path d="M334,309 L300,309" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+      <!-- PHASE 7 -->
+      <rect x="182" y="259" width="118" height="100" rx="12" fill="url(#g7)"/>
+      <text x="241" y="289" text-anchor="middle" font-size="22" fill="white">📊</text>
+      <text x="241" y="314" text-anchor="middle" font-size="11" font-weight="800" fill="white">التقديم والقرار</text>
+      <text x="241" y="331" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.85)">Communication</text>
+      <text x="241" y="346" text-anchor="middle" font-size="10" font-weight="900" fill="rgba(255,255,255,0.6)">⑦</text>
+
+      <!-- Feedback arrow: Phase 7 back to Phase 1 (loop) -->
+      <path d="M182,309 L89,309 L89,190" stroke="#90a4ae" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow)" fill="none"/>
+      <text x="55" y="258" text-anchor="middle" font-size="9" fill="#90a4ae">تكرار</text>
+      <text x="55" y="270" text-anchor="middle" font-size="8" fill="#90a4ae">Iteration</text>
+
+      <!-- Center connector (Phase 4 connects down to 5) already done -->
+
+      <!-- Right side: center info box -->
+      <rect x="680" y="90" width="190" height="270" rx="14" fill="white" stroke="#cde0f0" stroke-width="1"/>
+      <text x="775" y="118" text-anchor="middle" font-size="13" font-weight="900" fill="#0d1b2a">مفتاح النجاح</text>
+      <line x1="700" y1="126" x2="850" y2="126" stroke="#e3f2fd" stroke-width="1"/>
+      <text x="775" y="148" text-anchor="middle" font-size="11" fill="#546e7a">كل مرحلة تُغذّي التالية</text>
+      <text x="775" y="163" text-anchor="middle" font-size="9.5" fill="#90a4ae">Each phase feeds the next</text>
+
+      <!-- Mini legend - text starts further right to avoid overlap -->
+      <rect x="696" y="178" width="14" height="14" rx="3" fill="#ef5350"/>
+      <text x="718" y="190" font-size="10" fill="#546e7a" text-anchor="start">تحديد المشكلة</text>
+      <rect x="696" y="200" width="14" height="14" rx="3" fill="#ffa726"/>
+      <text x="718" y="212" font-size="10" fill="#546e7a" text-anchor="start">جمع البيانات</text>
+      <rect x="696" y="222" width="14" height="14" rx="3" fill="#ffee58"/>
+      <text x="718" y="234" font-size="10" fill="#546e7a" text-anchor="start">تنظيف البيانات</text>
+      <rect x="696" y="244" width="14" height="14" rx="3" fill="#66bb6a"/>
+      <text x="718" y="256" font-size="10" fill="#546e7a" text-anchor="start">استكشاف البيانات</text>
+      <rect x="696" y="266" width="14" height="14" rx="3" fill="#42a5f5"/>
+      <text x="718" y="278" font-size="10" fill="#546e7a" text-anchor="start">النمذجة والتحليل</text>
+      <rect x="696" y="288" width="14" height="14" rx="3" fill="#ab47bc"/>
+      <text x="718" y="300" font-size="10" fill="#546e7a" text-anchor="start">التفسير والتحقق</text>
+      <rect x="696" y="310" width="14" height="14" rx="3" fill="#26a69a"/>
+      <text x="718" y="322" font-size="10" fill="#546e7a" text-anchor="start">التقديم والقرار</text>
+
+      <!-- Note -->
+      <text x="450" y="395" text-anchor="middle" font-size="10" fill="#90a4ae">⟲ دورة تكرارية — النتائج قد تُعيدنا إلى مراحل سابقة (Iterative Process)</text>
+    </svg>
+  </div>
+
+  <!-- Phases detail with examples -->
+  <div class="phases-list">
+
+    <!-- Phase 1 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num ph-1">١</div>
+        <div class="phase-title-group">
+          <div class="phase-title">🎯 تحديد المشكلة وفهم الأعمال</div>
+          <div class="phase-en">Business Understanding & Problem Statement</div>
+        </div>
+      </div>
+      <div class="phase-body">
+        <p class="phase-desc">نقطة البداية التي يُحدَّد فيها السؤال الجوهري: <strong>ماذا نريد أن نعرف؟</strong> وما القرار الذي سيُبنى على التحليل؟ وتشمل: تحديد هدف التحليل <span class="en-term">(Analysis Objective)</span>، وفهم العمليات التجارية <span class="en-term">(Business Processes)</span>، وصياغة المشكلة كسؤال قابل للقياس.</p>
+        <div class="example-box">
+          <div class="example-label">💼 مثال تطبيقي</div>
+          <div class="example-text">
+            <strong>سيناريو:</strong> مدير تجاري في شركة اتصالات يلاحظ ارتفاعاً في شكاوى العملاء.<br><br>
+            <strong>المشكلة المُصاغة بشكل صحيح:</strong> «ما هي الأسباب الرئيسية لزيادة معدل إلغاء الاشتراك <span class="en-term">(Churn Rate)</span> بنسبة 12% في الربع الأول من 2024 مقارنةً بالربع السابق، وما الإجراءات التي يمكن اتخاذها لخفضه إلى 8% بحلول نهاية العام؟»<br><br>
+            <strong>ما تم تجنبه:</strong> صياغة مبهمة مثل «ابحثوا لنا عن مشاكل العملاء» — لأنها لا تُحدد مقياساً، ولا إطاراً زمنياً، ولا هدفاً قابلاً للقياس.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num ph-2">٢</div>
+        <div class="phase-title-group">
+          <div class="phase-title">📥 جمع البيانات</div>
+          <div class="phase-en">Data Collection</div>
+        </div>
+      </div>
+      <div class="phase-body">
+        <p class="phase-desc">جمع البيانات من مصادرها المختلفة. تنقسم البيانات أولاً حسب مصدر جمعها إلى نوعين رئيسيين، ثم حسب بنيتها:</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;">
+          <div style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:14px;">
+            <div style="font-weight:800;color:#2e7d32;margin-bottom:6px;">📋 بيانات أولية <span class="en-term">(Primary Data)</span></div>
+            <div style="font-size:0.88rem;color:#388e3c;">تُجمَع لأول مرة من المصدر مباشرة لغرض التحليل الحالي. أدق وأكثر ملاءمة لكنها تستهلك وقتاً وتكلفة أعلى.<br><br>
+            <strong>أمثلة:</strong> استطلاعات الرأي، المقابلات، التجارب، أجهزة الاستشعار، تسجيلات المبيعات المباشرة.</div>
+          </div>
+          <div style="background:#e3f2fd;border:1px solid #bbdefb;border-radius:8px;padding:14px;">
+            <div style="font-weight:800;color:#1565c0;margin-bottom:6px;">🗄️ بيانات ثانوية <span class="en-term">(Secondary Data)</span></div>
+            <div style="font-size:0.88rem;color:#1976d2;">جُمعت مسبقاً لأغراض أخرى وتُعاد الاستفادة منها. أسرع وأرخص لكنها قد لا تُلاءم تماماً سؤال التحليل.<br><br>
+            <strong>أمثلة:</strong> التقارير الحكومية، دراسات سابقة، قواعد بيانات مفتوحة، سجلات الشركة التاريخية.</div>
+          </div>
+        </div>
+
+        <p class="phase-desc">كما تنقسم البيانات حسب بنيتها إلى:</p>
+        <ul class="steps-list">
+          <li><span class="step-dot"></span>بيانات داخلية <span class="en-term">(Internal Data)</span>: قواعد بيانات المؤسسة، أنظمة ERP، سجلات المبيعات.</li>
+          <li><span class="step-dot orange"></span>بيانات خارجية <span class="en-term">(External Data)</span>: تقارير السوق، بيانات مفتوحة <span class="en-term">(Open Data)</span>، بيانات الجهات الحكومية.</li>
+          <li><span class="step-dot green"></span>بيانات منظمة <span class="en-term">(Structured)</span>: جداول وقواعد بيانات علائقية.</li>
+          <li><span class="step-dot red"></span>بيانات غير منظمة <span class="en-term">(Unstructured)</span>: نصوص، صور، تسجيلات صوتية.</li>
+        </ul>
+        <div class="example-box">
+          <div class="example-label">💼 مثال تطبيقي — مشروع الاتصالات</div>
+          <div class="example-text">
+            <strong>البيانات الأولية المُجمَّعة:</strong> استطلاع رضا العملاء (1,200 مشترك)، تسجيلات مكالمات الشكاوى.<br>
+            <strong>البيانات الثانوية:</strong> سجلات الاشتراك التاريخية من نظام CRM (3 سنوات)، أسعار المنافسين من تقارير السوق المفتوحة، تقييمات التطبيق على متاجر Google Play وApp Store.
+          </div>
+        </div>
+      </div>
+
+    <!-- Phase 3 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num ph-3">٣</div>
+        <div class="phase-title-group">
+          <div class="phase-title">🧹 تنظيف البيانات وإعدادها</div>
+          <div class="phase-en">Data Cleaning & Wrangling</div>
+        </div>
+      </div>
+      <div class="phase-body">
+        <p class="phase-desc">تحويل البيانات الخام إلى بيانات نظيفة وجاهزة للتحليل. وتشمل: معالجة القيم المفقودة <span class="en-term">(Missing Values)</span>، إزالة التكرارات <span class="en-term">(Duplicates)</span>، تصحيح التناقضات <span class="en-term">(Inconsistencies)</span>، توحيد الصيغ <span class="en-term">(Standardization)</span>، ومعالجة القيم الشاذة <span class="en-term">(Outliers)</span>. يستهلك هذا الجزء ما يصل إلى 80% من وقت المحلل.</p>
+        <div class="example-box">
+          <div class="example-label">💼 مثال تطبيقي</div>
+          <div class="example-text">
+            <strong>مشاكل اكتُشفت في بيانات الاتصالات:</strong><br>
+            — تاريخ الإلغاء مُسجَّل بثلاثة صيغ مختلفة: «2024-01-15»، «15/1/2024»، «January 15» → يجب التوحيد.<br>
+            — 340 سجلاً مكرراً لنفس العميل بسبب خطأ في نظام CRM → حذف التكرارات.<br>
+            — 12% من العملاء لم يُسجَّل عمرهم → استراتيجية تعويض بالوسيط <span class="en-term">(Median Imputation)</span>.<br>
+            — عميل مُسجَّل فاتورته 50,000 ريال شهرياً وهو من باقة أفراد → قيمة شاذة تستوجب التحقق.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num ph-4">٤</div>
+        <div class="phase-title-group">
+          <div class="phase-title">🔍 الاستكشاف والتحليل الأولي</div>
+          <div class="phase-en">Exploratory Data Analysis (EDA)</div>
+        </div>
+      </div>
+      <div class="phase-body">
+        <p class="phase-desc">الاستكشاف الأولي للبيانات لفهم طبيعتها وخصائصها قبل النمذجة. تشمل الإحصاء الوصفي <span class="en-term">(Descriptive Statistics)</span>، والتصور البياني <span class="en-term">(Data Visualization)</span>، وتحليل الارتباطات <span class="en-term">(Correlations)</span>، واكتشاف الأنماط الأولية.</p>
+        <div class="example-box">
+          <div class="example-label">💼 مثال تطبيقي</div>
+          <div class="example-text">
+            <strong>اكتشافات مرحلة الاستكشاف:</strong><br>
+            — 68% من الإلغاءات تحدث في أول 3 أشهر من الاشتراك.<br>
+            — العملاء الذين تواصلوا مع خدمة العملاء أكثر من مرتين في شهر لديهم معدل إلغاء 4× أعلى.<br>
+            — لا يوجد ارتباط واضح بين قيمة الفاتورة والإلغاء (على عكس الافتراض المبدئي).<br>
+            — ذروة الإلغاءات تكون أيام الأحد والإثنين → قد ترتبط بتجربة استخدام عطلة نهاية الأسبوع.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num ph-5">٥</div>
+        <div class="phase-title-group">
+          <div class="phase-title">🤖 التحليل والنمذجة</div>
+          <div class="phase-en">Data Analysis & Modeling</div>
+        </div>
+      </div>
+      <div class="phase-body">
+        <p class="phase-desc">تطبيق الأساليب التحليلية والإحصائية المناسبة لطبيعة المشكلة، وتشمل: التحليل الإحصائي <span class="en-term">(Statistical Analysis)</span>، الأساليب التنبؤية <span class="en-term">(Predictive Methods)</span>، التصنيف <span class="en-term">(Classification)</span>، والتحليل العنقودي <span class="en-term">(Cluster Analysis)</span>. وقد تشمل أيضاً تقنيات التعلم الآلي <span class="en-term">(Machine Learning)</span> في الحالات التي تستدعي ذلك.</p>
+        <div class="example-box">
+          <div class="example-label">💼 مثال تطبيقي</div>
+          <div class="example-text">
+            <strong>الأساليب التحليلية المطبّقة:</strong><br>
+            — أسلوب التصنيف <span class="en-term">(Classification)</span> لتصنيف العملاء إلى «عالي الخطورة للإلغاء / منخفض الخطورة» بناءً على سجل تفاعلهم مع الخدمة.<br>
+            — تحليل العوامل الأكثر تأثيراً: تبيّن أن «عدد شكاوى الأشهر الثلاثة الأولى» هو أقوى مؤشر على احتمال الإلغاء.<br>
+            — تحليل عنقودي <span class="en-term">(Cluster Analysis)</span> لتصنيف العملاء في 4 شرائح حسب نمط الاستخدام.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 6 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num ph-6">٦</div>
+        <div class="phase-title-group">
+          <div class="phase-title">✅ التفسير والتحقق</div>
+          <div class="phase-en">Interpretation & Validation</div>
+        </div>
+      </div>
+      <div class="phase-body">
+        <p class="phase-desc">التحقق من صحة النماذج والنتائج، وإعادة فحص التوافق مع المشكلة الأصلية. هل النتائج منطقية؟ هل النموذج قابل للتعميم <span class="en-term">(Generalizable)</span>؟ هل تجيب على السؤال الأصلي؟</p>
+        <div class="example-box">
+          <div class="example-label">💼 مثال تطبيقي</div>
+          <div class="example-text">
+            <strong>عملية التحقق:</strong><br>
+            — اختُبر النموذج على بيانات لم يرها من الربع الرابع 2023 → دقة التنبؤ 84%، وهي مقبولة تجارياً.<br>
+            — مراجعة النتائج مع خبراء خدمة العملاء: أكدوا أن «مشاكل الأشهر الأولى» حقيقية ومعروفة تشغيلياً.<br>
+            — تحديد حدود النموذج: لا يُطبَّق على العملاء المؤسسيين <span class="en-term">(Enterprise Customers)</span> لأن بياناتهم مختلفة بنيوياً.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 7 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num ph-7">٧</div>
+        <div class="phase-title-group">
+          <div class="phase-title">📊 تقديم النتائج واتخاذ القرار</div>
+          <div class="phase-en">Communication & Decision Making</div>
+        </div>
+      </div>
+      <div class="phase-body">
+        <p class="phase-desc">ترجمة النتائج إلى رؤى واضحة تُدعم اتخاذ القرار <span class="en-term">(Decision Making)</span>. تشمل: إعداد التقارير والتصورات البيانية <span class="en-term">(Dashboards)</span>، تقديم التوصيات <span class="en-term">(Recommendations)</span>، والتواصل مع أصحاب القرار بلغة الأعمال.</p>
+        <div class="example-box">
+          <div class="example-label">💼 مثال تطبيقي</div>
+          <div class="example-text">
+            <strong>التوصيات المُقدَّمة لمجلس الإدارة:</strong><br>
+            — <strong>إجراء فوري:</strong> تفعيل برنامج «رعاية العملاء الجُدد» للعملاء المُصنَّفين عالي الخطورة في الأشهر الثلاثة الأولى (مكالمة استباقية وعرض ترقية مجاني).<br>
+            — <strong>مؤشر القياس:</strong> مراقبة معدل الإلغاء أسبوعياً مع توقّع انخفاض بنسبة 15-20% خلال 90 يوماً.<br>
+            — <strong>العائد المتوقع:</strong> احتجاز 1,200 عميل = إيراد إضافي 2.4 مليون ريال سنوياً.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ══════════ SECTION 4: ANATOMY ══════════ -->
+<section id="anatomy">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">٤</div>
+    <h2 class="section-title">تشريح <span>مجموعة البيانات</span></h2>
+    <div class="section-line"></div>
+    <p style="color:var(--gray);margin-top:12px;font-size:0.95rem;">Dataset Anatomy — فهم المكوّنات الأساسية قبل أي تحليل</p>
+  </div>
+
+  <!-- Dataset visual -->
+  <div class="anatomy-svg-box">
+    <svg viewBox="0 0 860 380" xmlns="http://www.w3.org/2000/svg" font-family="Tajawal, Cairo, sans-serif">
+      <defs>
+        <linearGradient id="header-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#0d1b2a"/>
+          <stop offset="100%" stop-color="#1a6faf"/>
+        </linearGradient>
+        <linearGradient id="obs-highlight" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#e3f2fd"/>
+          <stop offset="100%" stop-color="#bbdefb"/>
+        </linearGradient>
+        <linearGradient id="cell-highlight" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#fffde7"/>
+          <stop offset="100%" stop-color="#fff9c4"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Background -->
+      <rect width="860" height="380" rx="14" fill="#f8fbff"/>
+
+      <!-- Title area - single clean title -->
+      <text x="430" y="36" text-anchor="middle" font-size="15" font-weight="900" fill="#0d1b2a">تشريح مجموعة البيانات — Dataset Anatomy</text>
+
+      <!-- Dataset boundary box -->
+      <rect x="40" y="55" width="620" height="295" rx="10" fill="white" stroke="#90bfdf" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="350" y="52" text-anchor="middle" font-size="9.5" fill="#1a6faf" font-weight="700">مجموعة البيانات (Dataset)</text>
+
+      <!-- Column labels (header row) -->
+      <rect x="40" y="75" width="620" height="36" rx="8" fill="url(#header-grad)"/>
+      <text x="160" y="99" text-anchor="middle" font-size="11.5" font-weight="800" fill="white">رقم الطالب</text>
+      <text x="310" y="99" text-anchor="middle" font-size="11.5" font-weight="800" fill="white">الاسم</text>
+      <text x="450" y="99" text-anchor="middle" font-size="11.5" font-weight="800" fill="white">الدرجة</text>
+      <text x="590" y="99" text-anchor="middle" font-size="11.5" font-weight="800" fill="white">النتيجة</text>
+      <text x="160" y="114" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.6)">Student_ID</text>
+      <text x="310" y="114" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.6)">Name</text>
+      <text x="450" y="114" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.6)">Score</text>
+      <text x="590" y="114" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.6)">Result</text>
+
+      <!-- Grid lines (columns) -->
+      <line x1="250" y1="75" x2="250" y2="350" stroke="#e0eff8" stroke-width="1"/>
+      <line x1="390" y1="75" x2="390" y2="350" stroke="#e0eff8" stroke-width="1"/>
+      <line x1="520" y1="75" x2="520" y2="350" stroke="#e0eff8" stroke-width="1"/>
+
+      <!-- Column annotation - placed at right side, clearly separated -->
+      <line x1="660" y1="93" x2="700" y2="80" stroke="#2196f3" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <rect x="700" y="65" width="148" height="36" rx="6" fill="#e3f2fd" stroke="#2196f3" stroke-width="1"/>
+      <text x="774" y="81" text-anchor="middle" font-size="10" font-weight="800" fill="#1565c0">عمود (Column)</text>
+      <text x="774" y="95" text-anchor="middle" font-size="9" fill="#1976d2">= متغير (Variable)</text>
+
+      <!-- Observation 1 (highlighted row) -->
+      <rect x="40" y="118" width="620" height="38" rx="0" fill="url(#obs-highlight)"/>
+      <text x="160" y="142" text-anchor="middle" font-size="12" fill="#0d1b2a">S-001</text>
+      <text x="310" y="142" text-anchor="middle" font-size="12" fill="#0d1b2a">أحمد خالد</text>
+      <text x="450" y="142" text-anchor="middle" font-size="12" fill="#0d1b2a" font-weight="700">88</text>
+      <!-- Highlighted cell -->
+      <rect x="520" y="118" width="140" height="38" rx="0" fill="#fff9c4"/>
+      <text x="590" y="142" text-anchor="middle" font-size="12" fill="#e65100" font-weight="700">ناجح</text>
+
+      <!-- Rows 2-5 -->
+      <rect x="40" y="156" width="620" height="38" rx="0" fill="white"/>
+      <text x="160" y="180" text-anchor="middle" font-size="12" fill="#546e7a">S-002</text>
+      <text x="310" y="180" text-anchor="middle" font-size="12" fill="#546e7a">سارة محمد</text>
+      <text x="450" y="180" text-anchor="middle" font-size="12" fill="#546e7a">74</text>
+      <text x="590" y="180" text-anchor="middle" font-size="12" fill="#43a047" font-weight="700">ناجح</text>
+
+      <rect x="40" y="194" width="620" height="38" rx="0" fill="#fafcff"/>
+      <text x="160" y="218" text-anchor="middle" font-size="12" fill="#546e7a">S-003</text>
+      <text x="310" y="218" text-anchor="middle" font-size="12" fill="#546e7a">عمر سالم</text>
+      <text x="450" y="218" text-anchor="middle" font-size="12" fill="#546e7a">55</text>
+      <text x="590" y="218" text-anchor="middle" font-size="12" fill="#e53935" font-weight="700">راسب</text>
+
+      <rect x="40" y="232" width="620" height="38" rx="0" fill="white"/>
+      <text x="160" y="256" text-anchor="middle" font-size="12" fill="#546e7a">S-004</text>
+      <text x="310" y="256" text-anchor="middle" font-size="12" fill="#546e7a">نورة علي</text>
+      <text x="450" y="256" text-anchor="middle" font-size="12" fill="#546e7a">92</text>
+      <text x="590" y="256" text-anchor="middle" font-size="12" fill="#43a047" font-weight="700">ناجح</text>
+
+      <rect x="40" y="270" width="620" height="38" rx="0" fill="#fafcff"/>
+      <text x="160" y="294" text-anchor="middle" font-size="12" fill="#546e7a">S-005</text>
+      <text x="310" y="294" text-anchor="middle" font-size="12" fill="#546e7a">فيصل جاسم</text>
+      <text x="450" y="294" text-anchor="middle" font-size="12" fill="#546e7a">61</text>
+      <text x="590" y="294" text-anchor="middle" font-size="12" fill="#43a047" font-weight="700">ناجح</text>
+
+      <!-- Row count indicator -->
+      <rect x="40" y="308" width="620" height="28" rx="0" fill="#e8f4fd"/>
+      <text x="350" y="326" text-anchor="middle" font-size="10" fill="#546e7a">... 245 سجلاً آخر (المجموع: 250 مشاهدة)</text>
+
+      <!-- Bottom row label -->
+      <text x="350" y="355" text-anchor="middle" font-size="9" fill="#90a4ae">⬆ كل صف = مشاهدة (Observation / Record)</text>
+
+      <!-- Annotation: Row (Observation) -->
+      <rect x="30" y="119" width="8" height="36" rx="2" fill="#1a6faf"/>
+      <text x="25" y="142" text-anchor="middle" font-size="0" fill="#1a6faf">|</text>
+
+      <!-- Annotation: Highlighted cell -->
+      <path d="M660,137 L700,137" stroke="#e65100" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <rect x="700" y="124" width="148" height="48" rx="6" fill="#fff3e0" stroke="#fb8c00" stroke-width="1"/>
+      <text x="774" y="142" text-anchor="middle" font-size="10" font-weight="800" fill="#e65100">خلية (Cell)</text>
+      <text x="774" y="157" text-anchor="middle" font-size="9" fill="#795548">تحتوي قيمة (Value)</text>
+      <text x="774" y="169" text-anchor="middle" font-size="10" font-weight="700" fill="#e65100">«ناجح»</text>
+
+      <!-- Annotation: Observation row -->
+      <path d="M660" y="137" d="M660,137 M30,137 L20,137 L20,200" stroke="transparent"/>
+      <rect x="700" y="200" width="148" height="56" rx="6" fill="#e8f5e9" stroke="#66bb6a" stroke-width="1"/>
+      <text x="774" y="218" text-anchor="middle" font-size="10" font-weight="800" fill="#2e7d32">مشاهدة (Observation)</text>
+      <text x="774" y="232" text-anchor="middle" font-size="9" fill="#388e3c">= سجل (Record)</text>
+      <text x="774" y="247" text-anchor="middle" font-size="9" fill="#388e3c">بيانات كيان واحد</text>
+      <line x1="700" y1="228" x2="660" y2="175" stroke="#66bb6a" stroke-width="1" stroke-dasharray="3,2"/>
+
+      <!-- Annotation: Variable -->
+      <rect x="700" y="280" width="148" height="60" rx="6" fill="#f3e5f5" stroke="#ab47bc" stroke-width="1"/>
+      <text x="774" y="298" text-anchor="middle" font-size="10" font-weight="800" fill="#6a1b9a">متغير (Variable)</text>
+      <text x="774" y="312" text-anchor="middle" font-size="9" fill="#7b1fa2">= عمود (Column)</text>
+      <text x="774" y="327" text-anchor="middle" font-size="9" fill="#7b1fa2">خاصية تُقاس لكل كيان</text>
+      <line x1="700" y1="310" x2="590" y2="310 " stroke="#ab47bc" stroke-width="1" stroke-dasharray="3,2"/>
+    </svg>
+  </div>
+
+  <h3 style="font-weight:800;color:var(--navy);margin:32px 0 20px;font-size:1.2rem;">مصطلحات التشريح الأساسية</h3>
+  <div class="anatomy-terms-grid">
+    <div class="term-card"><div class="term-en">Dataset</div><div class="term-ar">مجموعة البيانات</div><div class="term-def">مجموعة منظمة من البيانات المتعلقة بموضوع محدد، تُخزَّن عادةً في جدول أو ملف أو قاعدة بيانات.</div></div>
+    <div class="term-card"><div class="term-en">Observation / Record / Row</div><div class="term-ar">مشاهدة / سجل / صف</div><div class="term-def">صف واحد في الجدول يمثّل كياناً واحداً: شخص، معاملة، حدث، منتج. هو وحدة التحليل الأساسية.</div></div>
+    <div class="term-card"><div class="term-en">Variable / Feature / Column</div><div class="term-ar">متغير / خاصية / عمود</div><div class="term-def">عمود في الجدول يمثّل خاصية أو سمة تُقاس لكل مشاهدة. مثال: العمر، الجنس، الدخل.</div></div>
+    <div class="term-card"><div class="term-en">Cell</div><div class="term-ar">خلية</div><div class="term-def">تقاطع صف وعمود محددَين. تحتوي على قيمة واحدة تمثّل قياس متغير معين لمشاهدة معينة.</div></div>
+    <div class="term-card"><div class="term-en">Value</div><div class="term-ar">قيمة</div><div class="term-def">المحتوى الفعلي للخلية. قد تكون رقمية <span class="en-term">(Numeric)</span>، نصية <span class="en-term">(Text)</span>، تاريخية، أو منطقية <span class="en-term">(Boolean)</span>.</div></div>
+    <div class="term-card"><div class="term-en">Data Type</div><div class="term-ar">نوع البيانات</div><div class="term-def">تصنيف القيم: صحيح <span class="en-term">(Integer)</span>، عشري <span class="en-term">(Float)</span>، نص <span class="en-term">(String)</span>، تاريخ <span class="en-term">(Date)</span>، منطقي <span class="en-term">(Boolean)</span>.</div></div>
+    <div class="term-card"><div class="term-en">Missing Value / Null</div><div class="term-ar">قيمة مفقودة / فارغة</div><div class="term-def">خلية لا تحتوي بيانات. قد تُشير إلى عدم القياس، أو خطأ في التسجيل، أو غياب الخاصية لهذا الكيان.</div></div>
+    <div class="term-card"><div class="term-en">Outlier</div><div class="term-ar">قيمة شاذة</div><div class="term-def">قيمة تبتعد بشكل كبير جداً عن باقي القيم في نفس المتغير. قد تكون خطأ في البيانات أو ظاهرة حقيقية.</div></div>
+    <div class="term-card"><div class="term-en">Dependent Variable / Target</div><div class="term-ar">المتغير التابع / الهدف</div><div class="term-def">المتغير الذي نريد التنبؤ به أو شرحه. مثال: «هل سيشتري العميل؟» في نموذج التنبؤ.</div></div>
+    <div class="term-card"><div class="term-en">Independent Variable / Feature</div><div class="term-ar">المتغير المستقل / المدخل</div><div class="term-def">المتغيرات التي نستخدمها للتنبؤ أو التفسير. مثال: العمر، الدخل، تاريخ الشراء السابق.</div></div>
+    <div class="term-card"><div class="term-en">Categorical Variable</div><div class="term-ar">متغير فئوي</div><div class="term-def">متغير يأخذ قيماً من مجموعة محدودة من الفئات. مثال: الجنس (ذكر/أنثى)، النتيجة (ناجح/راسب).</div></div>
+    <div class="term-card"><div class="term-en">Numerical Variable</div><div class="term-ar">متغير رقمي</div><div class="term-def">متغير يأخذ قيماً رقمية يمكن إجراء العمليات الحسابية عليها. مثال: الدرجة، العمر، الراتب.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ SECTION 5: IMPORTANCE & SMART ══════════ -->
+<section id="importance">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">٥</div>
+    <h2 class="section-title">أهمية كل مرحلة — <span>تركيز خاص</span> على الأساسيات</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p>إن أفضل ما يميّز المحلل المحترف عن المبتدئ ليس معرفته بالأدوات والبرمجيات، بل <strong>عمق فهمه لما يفعله في كل مرحلة ولماذا</strong>. فيما يلي التركيز الخاص على المراحل الأكثر تأثيراً.</p>
+
+  <!-- PROBLEM STATEMENT FOCUS -->
+  <h3 style="font-weight:800;color:var(--navy);margin:36px 0 16px;font-size:1.25rem;">🎯 التركيز الخاص: المرحلة الأولى — تحديد المشكلة</h3>
+
+  <p>تعدّ هذه المرحلة الركيزة الأساسية التي يقوم عليها نجاح أي مشروع تحليلي. كثير من الإخفاقات لا تعود إلى ضعف في الأساليب التقنية، بل إلى <strong>غياب الفهم الحقيقي للمشكلة</strong>.</p>
+
+  <!-- Business process SVG - now 5 boxes -->
+  <div class="lifecycle-svg-wrapper" style="margin:28px 0;">
+    <svg viewBox="0 0 1020 210" xmlns="http://www.w3.org/2000/svg" font-family="Tajawal, Cairo, sans-serif">
+      <defs>
+        <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#1a6faf"/>
+        </marker>
+      </defs>
+      <rect width="1020" height="210" rx="12" fill="#f0f6ff"/>
+      <text x="510" y="28" text-anchor="middle" font-size="14" font-weight="900" fill="#0d1b2a">ركائز تحديد المشكلة الناجح</text>
+
+      <!-- Box 1 -->
+      <rect x="14" y="45" width="162" height="130" rx="10" fill="white" stroke="#bbdefb" stroke-width="2"/>
+      <text x="95" y="76" text-anchor="middle" font-size="20">🏢</text>
+      <text x="95" y="98" text-anchor="middle" font-size="10.5" font-weight="800" fill="#0d1b2a">فهم العملية التجارية</text>
+      <text x="95" y="113" text-anchor="middle" font-size="9" fill="#546e7a">Business Process</text>
+      <text x="95" y="130" text-anchor="middle" font-size="8.5" fill="#90a4ae">كيف يسير العمل؟</text>
+      <text x="95" y="145" text-anchor="middle" font-size="8.5" fill="#90a4ae">من يستخدم البيانات؟</text>
+      <path d="M176,110 L198,110" stroke="#1a6faf" stroke-width="2" marker-end="url(#arr2)" fill="none"/>
+
+      <!-- Box 2 -->
+      <rect x="202" y="45" width="162" height="130" rx="10" fill="white" stroke="#bbdefb" stroke-width="2"/>
+      <text x="283" y="76" text-anchor="middle" font-size="20">❓</text>
+      <text x="283" y="98" text-anchor="middle" font-size="10.5" font-weight="800" fill="#0d1b2a">صياغة المشكلة</text>
+      <text x="283" y="113" text-anchor="middle" font-size="9" fill="#546e7a">Problem Statement</text>
+      <text x="283" y="130" text-anchor="middle" font-size="8.5" fill="#90a4ae">محددة + قابلة للقياس</text>
+      <text x="283" y="145" text-anchor="middle" font-size="8.5" fill="#90a4ae">+ إطار زمني</text>
+      <path d="M364,110 L386,110" stroke="#1a6faf" stroke-width="2" marker-end="url(#arr2)" fill="none"/>
+
+      <!-- Box 3: Understanding the Data (NEW) -->
+      <rect x="390" y="45" width="162" height="130" rx="10" fill="white" stroke="#c8e6c9" stroke-width="2"/>
+      <text x="471" y="76" text-anchor="middle" font-size="20">🔎</text>
+      <text x="471" y="98" text-anchor="middle" font-size="10.5" font-weight="800" fill="#0d1b2a">فهم البيانات المتاحة</text>
+      <text x="471" y="113" text-anchor="middle" font-size="9" fill="#2e7d32">Understanding the Data</text>
+      <text x="471" y="130" text-anchor="middle" font-size="8.5" fill="#546e7a">المتغيرات • قاموس البيانات</text>
+      <text x="471" y="145" text-anchor="middle" font-size="8.5" fill="#546e7a">البيانات الوصفية (Metadata)</text>
+      <text x="471" y="160" text-anchor="middle" font-size="8" fill="#90a4ae">ما البيانات المتاحة وجودتها؟</text>
+      <path d="M552,110 L574,110" stroke="#1a6faf" stroke-width="2" marker-end="url(#arr2)" fill="none"/>
+
+      <!-- Box 4 -->
+      <rect x="578" y="45" width="162" height="130" rx="10" fill="white" stroke="#bbdefb" stroke-width="2"/>
+      <text x="659" y="76" text-anchor="middle" font-size="20">🎯</text>
+      <text x="659" y="98" text-anchor="middle" font-size="10.5" font-weight="800" fill="#0d1b2a">القرار المستهدف</text>
+      <text x="659" y="113" text-anchor="middle" font-size="9" fill="#546e7a">Target Decision</text>
+      <text x="659" y="130" text-anchor="middle" font-size="8.5" fill="#90a4ae">من سيتخذ القرار؟</text>
+      <text x="659" y="145" text-anchor="middle" font-size="8.5" fill="#90a4ae">ما تكلفة الخطأ؟</text>
+      <path d="M740,110 L762,110" stroke="#1a6faf" stroke-width="2" marker-end="url(#arr2)" fill="none"/>
+
+      <!-- Box 5: Result -->
+      <rect x="766" y="45" width="240" height="130" rx="10" fill="#0d1b2a" stroke="#1a6faf" stroke-width="2"/>
+      <text x="886" y="76" text-anchor="middle" font-size="20">✅</text>
+      <text x="886" y="98" text-anchor="middle" font-size="10.5" font-weight="800" fill="white">تحليل ذو قيمة حقيقية</text>
+      <text x="886" y="113" text-anchor="middle" font-size="9" fill="#90bfdf">Valuable Analysis</text>
+      <text x="886" y="130" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,0.65)">نتائج قابلة للتنفيذ</text>
+      <text x="886" y="145" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,0.65)">Actionable Results</text>
+
+      <!-- Bottom note -->
+      <text x="510" y="196" text-anchor="middle" font-size="9" fill="#546e7a">إغفال أي ركيزة = تحليل قد يكون صحيحاً رياضياً لكنه عديم الجدوى تجارياً</text>
+    </svg>
+  </div>
+
+  <!-- SMART Framework -->
+  <h4 style="font-weight:800;color:var(--navy);margin:28px 0 16px;">إطار SMART لصياغة المشكلة</h4>
+  <div class="smart-grid">
+    <div class="smart-item"><div class="smart-letter">S</div><div class="smart-word">Specific</div><div class="smart-ar">محددة بدقة</div></div>
+    <div class="smart-item"><div class="smart-letter">M</div><div class="smart-word">Measurable</div><div class="smart-ar">قابلة للقياس</div></div>
+    <div class="smart-item"><div class="smart-letter">A</div><div class="smart-word">Achievable</div><div class="smart-ar">قابلة للتحقيق</div></div>
+    <div class="smart-item"><div class="smart-letter">R</div><div class="smart-word">Relevant</div><div class="smart-ar">ذات صلة بهدف تجاري</div></div>
+    <div class="smart-item"><div class="smart-letter">T</div><div class="smart-word">Time-bound</div><div class="smart-ar">مقيدة بإطار زمني</div></div>
+  </div>
+
+  <!-- Metadata and Data Dictionary box -->
+  <div class="quote-block" style="margin:28px 0;">
+    <p style="font-weight:800;color:var(--navy);margin-bottom:10px;">📖 أهمية البيانات الوصفية وقاموس البيانات</p>
+    <p style="margin-bottom:10px;"><strong>البيانات الوصفية <span class="en-term">(Metadata)</span></strong> هي «بيانات عن البيانات» — تصف الحقول وأنواعها ومصادرها وتاريخ تحديثها. مثال: معرفة أن حقل «تاريخ الميلاد» يُسجَّل بصيغة هجرية في نظام دون ميلادية في آخر هي بيانات وصفية بالغة الأهمية.</p>
+    <p style="margin-bottom:0;"><strong>قاموس البيانات <span class="en-term">(Data Dictionary)</span></strong> وثيقة مرجعية تُعرّف كل متغير في مجموعة البيانات: اسمه، نوعه، معناه التجاري، القيم المسموحة، والمصدر. غيابه يُسبب سوء تفسير البيانات — كأن يظن محللان مختلفان أن «العميل النشط» تعريفه مختلف في كل نظام.</p>
+    <div class="quote-source" style="margin-top:10px;">نصيحة عملية: قبل الغوص في أي بيانات، اطلب قاموس البيانات وتأكد من تعريف كل متغير تجارياً.</div>
+  </div>
+
+  <!-- Data Preparation importance -->
+  <h3 style="font-weight:800;color:var(--navy);margin:40px 0 16px;font-size:1.25rem;">🧹 أهمية إعداد البيانات وتنظيفها</h3>
+  <div class="importance-banner" style="background:linear-gradient(135deg,#b71c1c,#880e1f);">
+    <div class="big-icon">⚠️</div>
+    <div>
+      <h3>مبدأ «القمامة دخلت — قمامة خرجت»</h3>
+      <p style="color:rgba(255,255,255,0.85)"><strong>Garbage In — Garbage Out (GIGO):</strong> أي خلل في جودة البيانات المُدخَلة سينعكس مباشرة على جودة النتائج، بصرف النظر عن مدى تطور الأساليب والأدوات المستخدمة.</p>
+    </div>
+  </div>
+
+  <div class="importance-grid">
+    <div class="imp-card"><div class="imp-icon">🔢</div><div class="imp-title">القيم المفقودة <span class="en-term">(Missing Values)</span></div><div class="imp-text">قد تُحرّف الإحصاءات الوصفية بشكل جذري وتُفسد نتائج النماذج إذا عولجت بشكل خاطئ.<br><br><strong>مثال:</strong> في استطلاع رضا وطني، لم يُجب 30% من المشاركين عن سؤال «مستوى الدخل». حذفهم كلياً يُحرّف النتائج لأنهم أغلبهم من ذوي الدخل المنخفض الذين يتحاشون الإفصاح — لذا يجب معالجتهم بطريقة إحصائية مدروسة.</div></div>
+    <div class="imp-card"><div class="imp-icon">📋</div><div class="imp-title">التكرارات <span class="en-term">(Duplicates)</span></div><div class="imp-text">تُضخّم حجم فئات معينة وتُعطي أوزاناً غير عادلة في التحليل.<br><br><strong>مثال:</strong> في قاعدة بيانات عملاء بنك، وجد الفريق أن 12,000 عميل مُسجَّل مرتين بسبب اختلاف بسيط في هجاء الاسم («محمد» و«محمد»). معالجة التكرارات أظهرت أن عدد العملاء الفعلي أقل بـ 8% مما يؤثر على تقديرات الربحية.</div></div>
+    <div class="imp-card"><div class="imp-icon">🎯</div><div class="imp-title">القيم الشاذة <span class="en-term">(Outliers)</span></div><div class="imp-text">قد تُفسد المتوسطات والنماذج، أو تكشف عن ظواهر مهمة تستحق الدراسة.<br><br><strong>مثال:</strong> في تحليل متوسط إنفاق العملاء في متجر إلكتروني، وُجد عميل واحد اشترى بـ 850,000 ريال مرة واحدة (شراء مؤسسي). إدراجه يرفع المتوسط بشكل يُضلّل — يجب تحليله كفئة منفصلة.</div></div>
+    <div class="imp-card"><div class="imp-icon">🔗</div><div class="imp-title">التناقضات <span class="en-term">(Inconsistencies)</span></div><div class="imp-text">بيانات غير موحدة الصيغة تمنع دمج المصادر وتُضعف موثوقية النتائج.<br><br><strong>مثال:</strong> في دمج بيانات مبيعات من فروع متعددة، كانت ثلاث فروع تُسجّل الجنس بـ «ذكر/أنثى»، وفرعان بـ «M/F»، وفرع بـ «1/2». دمجها دون توحيد أنتج 6 فئات بدلاً من 2.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ SECTION 6: FAILURES ══════════ -->
+<section id="failures">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">٦</div>
+    <h2 class="section-title">أمثلة على <span>الإخفاقات</span> عند إهمال كل مرحلة</h2>
+    <div class="section-line"></div>
+    <p style="color:var(--gray);margin-top:12px;font-size:0.95rem;">التعلم من أخطاء الآخرين أسرع وأقل تكلفة من ارتكابها بنفسك</p>
+  </div>
+
+  <!-- Phase 1 failures -->
+  <h3 style="font-weight:800;color:#b71c1c;margin:32px 0 16px;font-size:1.1rem;">① إخفاقات المرحلة الأولى — تحديد المشكلة</h3>
+  <div class="failure-card">
+    <div class="failure-header">
+      <div>
+        <div class="failure-badge">مجال الرعاية الصحية</div>
+        <div class="failure-title-text">أسلوب التوصية الطبية المتحيّز — Biased Healthcare Recommendation</div>
+      </div>
+      <div style="font-size:2rem;margin-right:auto">🏥</div>
+    </div>
+    <div class="failure-body">
+      <p class="failure-story">طوّرت إحدى شركات الرعاية الصحية الأمريكية أداة حاسوبية للتنبؤ بالمرضى الأكثر حاجة إلى الرعاية المكثفة. صاغ الفريق المشكلة بشكل مبهم: «تحديد المرضى الأكثر مرضاً». اختاروا <strong>تكاليف العلاج السابقة <span class="en-term">(Historical Healthcare Costs)</span></strong> كمقياس للمرض. النتيجة: ظهر تحيز عنصري <span class="en-term">(Racial Bias)</span> صارخ — المرضى الأفارقة الأمريكيون كانوا يحصلون تاريخياً على رعاية أقل، فبدت بياناتهم كأنهم «أقل مرضاً» رغم وضعهم الصحي الأسوأ.</p>
+      <div class="lesson-box">
+        <div class="lesson-label">💡 الدرس</div>
+        صياغة المشكلة يجب أن تحدد المقياس الصحيح <span class="en-term">(Metric)</span> الذي يقيس الهدف الفعلي — لا بديله <span class="en-term">(Proxy Variable)</span>. المال ليس مرادفاً للصحة.
+      </div>
+    </div>
+  </div>
+
+  <div class="failure-card">
+    <div class="failure-header">
+      <div>
+        <div class="failure-badge">إدارة الموارد البشرية</div>
+        <div class="failure-title-text">تحليل رضا الموظفين في النطاق الخاطئ — Wrong Analysis Scope</div>
+      </div>
+      <div style="font-size:2rem;margin-right:auto">👥</div>
+    </div>
+    <div class="failure-body">
+      <p class="failure-story">طلبت شركة تحليل معدل الدوران الوظيفي <span class="en-term">(Turnover Rate)</span>. صاغ الفريق المشكلة: «تحليل استطلاعات الرضا الوظيفي السنوية». بعد أشهر من التحليل، اكتشفوا أن معظم حالات ترك العمل تحدث في الأشهر الثلاثة الأولى <span class="en-term">(Onboarding Period)</span>، وأن الاستطلاعات تُجرى مرة واحدة في نهاية العام فقط — أي بعد أن يكون الموظف المحتمل الترك قد غادر أصلاً.</p>
+      <div class="lesson-box">
+        <div class="lesson-label">💡 الدرس</div>
+        فهم العملية التجارية <span class="en-term">(Business Process)</span> أولاً يكشف عن أسئلة التحليل الحقيقية ونطاقها الصحيح زمانياً وسياقياً.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 failures -->
+  <h3 style="font-weight:800;color:#e65100;margin:32px 0 16px;font-size:1.1rem;">② إخفاقات المرحلة الثانية — جمع البيانات</h3>
+  <div class="failure-card" style="border-color:#ffe0b2;">
+    <div class="failure-header" style="background:linear-gradient(135deg,#ef6c00,#e65100);">
+      <div>
+        <div class="failure-badge">تحيز في البيانات</div>
+        <div class="failure-title-text">التحيز في بيانات التوظيف — Biased Hiring Tool</div>
+      </div>
+      <div style="font-size:2rem;margin-right:auto">🤖</div>
+    </div>
+    <div class="failure-body" style="background:#fff8f5;">
+      <p class="failure-story">أطلقت شركة تكنولوجيا كبرى أداة حاسوبية لفرز السير الذاتية. جمعوا بيانات تاريخية لسير الموظفين المقبولين خلال 10 سنوات. غير أن 75% من الموظفين التاريخيين كانوا ذكوراً. تعلّمت الأداة تقليل تقييم السير الذاتية التي تحتوي على مصطلحات مرتبطة بالنساء — وهو تحيز منهجي <span class="en-term">(Systematic Bias)</span> نشأ من تحيز البيانات ذاتها. تم إلغاء المشروع كلياً بعد اكتشاف التحيز.</p>
+      <div class="lesson-box" style="border-color:#fb8c00;background:#fff8e1;">
+        <div class="lesson-label" style="color:#fb8c00;">💡 الدرس</div>
+        البيانات التاريخية تحمل تحيزات الماضي. لا يجوز اعتبار أي بيانات صالحة دون فحصها نقدياً لضمان تمثيلها العادل لجميع الفئات.
+      </div>
+    </div>
+  </div>
+
+  <div class="failure-card" style="border-color:#ffe0b2;">
+    <div class="failure-header" style="background:linear-gradient(135deg,#ef6c00,#e65100);">
+      <div>
+        <div class="failure-badge">قطاع التجزئة</div>
+        <div class="failure-title-text">فجوة البيانات الزمنية — Temporal Data Gap (COVID Effect)</div>
+      </div>
+      <div style="font-size:2rem;margin-right:auto">📅</div>
+    </div>
+    <div class="failure-body" style="background:#fff8f5;">
+      <p class="failure-story">أراد فريق تحليلي التنبؤ بالمبيعات <span class="en-term">(Sales Forecasting)</span>. جمعوا بيانات 5 سنوات ماضية شاملةً عام 2020. بيانات 2020 كانت مشوّهة كلياً بسبب جائحة كوفيد-19 (ارتفاع غير مسبوق في فئات كالتعقيم وانهيار في فئات أخرى كالسفر). إدراج هذه السنة أفسد النماذج التنبؤية تماماً.</p>
+      <div class="lesson-box" style="border-color:#fb8c00;background:#fff8e1;">
+        <div class="lesson-label" style="color:#fb8c00;">💡 الدرس</div>
+        البيانات المجمّعة تخضع لفحص الملاءمة السياقية الزمنية <span class="en-term">(Temporal Context Validation)</span>. الأحداث الاستثنائية تُنشئ بيانات استثنائية لا ينبغي تعميمها.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 failures -->
+  <h3 style="font-weight:800;color:#f9a825;margin:32px 0 16px;font-size:1.1rem;">③ إخفاقات المرحلة الثالثة — تنظيف البيانات</h3>
+  <div class="failure-card" style="border-color:#fff9c4;">
+    <div class="failure-header" style="background:linear-gradient(135deg,#f57f17,#e65100);">
+      <div>
+        <div class="failure-badge">البحث العلمي</div>
+        <div class="failure-title-text">خطأ في تسمية بيانات الجينوم — Genome Data Labeling Error</div>
+      </div>
+      <div style="font-size:2rem;margin-right:auto">🧬</div>
+    </div>
+    <div class="failure-body" style="background:#fffdf0;">
+      <p class="failure-story">في دراسة علمية بارزة حول علاقة الجينات بالأمراض، اكتُشف بعد النشر خطأ في التسمية <span class="en-term">(Labeling Error)</span> في ملف إكسل خلط بين مجموعتي المرضى والأصحاء. انقلبت النتائج العلمية رأساً على عقب. تكلّفت المؤسسة الممولة ملايين الدولارات في تكاليف السحب والاسترداد <span class="en-term">(Retraction)</span> وإعادة الدراسة.</p>
+      <div class="lesson-box" style="border-color:#f9a825;background:#fffde7;">
+        <div class="lesson-label" style="color:#f9a825;">💡 الدرس</div>
+        التحقق من صحة بنية البيانات <span class="en-term">(Data Schema Validation)</span> وعلامات الفئات <span class="en-term">(Labels)</span> ضرورة لا اختيار — خاصة في البيانات المُتلقّاة من أطراف خارجية.
+      </div>
+    </div>
+  </div>
+
+  <div class="failure-card" style="border-color:#fff9c4;">
+    <div class="failure-header" style="background:linear-gradient(135deg,#f57f17,#e65100);">
+      <div>
+        <div class="failure-badge">القطاع المالي</div>
+        <div class="failure-title-text">القيم المفقودة في نموذج الائتمان — Missing Values in Credit Scoring</div>
+      </div>
+      <div style="font-size:2rem;margin-right:auto">💳</div>
+    </div>
+    <div class="failure-body" style="background:#fffdf0;">
+      <p class="failure-story">استخدم بنك نموذجاً لتقييم الجدارة الائتمانية <span class="en-term">(Credit Scoring Model)</span>. كان الفريق يستبدل القيم المفقودة في حقل «الدخل الشهري» بالقيمة صفر. هذا جعل النموذج يُصنّف عملاء ذوي دخل مرتفع لكن دخلهم غير مُسجَّل (موظفون جدد أو عملاء خارجيون) كعملاء عالي المخاطر <span class="en-term">(High-Risk)</span>. نُفِّذ ظلم مالي بحق عملاء أصحاب ملاءة.</p>
+      <div class="lesson-box" style="border-color:#f9a825;background:#fffde7;">
+        <div class="lesson-label" style="color:#f9a825;">💡 الدرس</div>
+        استراتيجية التعويض عن القيم المفقودة <span class="en-term">(Imputation Strategy)</span> تتطلب دراسة طبيعة الغياب: هل هو عشوائي <span class="en-term">(MCAR)</span> أم منهجي <span class="en-term">(MNAR)</span>؟ الصفر ليس دائماً الإجابة.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4 failures -->
+  <h3 style="font-weight:800;color:#2e7d32;margin:32px 0 16px;font-size:1.1rem;">④ إخفاقات المرحلة الرابعة — الاستكشاف</h3>
+  <div class="failure-card" style="border-color:#c8e6c9;">
+    <div class="failure-header" style="background:linear-gradient(135deg,#388e3c,#1b5e20);">
+      <div>
+        <div class="failure-badge">التصنيع</div>
+        <div class="failure-title-text">تجاوز التحليل الاستكشافي — Skipped EDA (Seasonal Blindness)</div>
+      </div>
+      <div style="font-size:2rem;margin-right:auto">🏭</div>
+    </div>
+    <div class="failure-body" style="background:#f9fff9;">
+      <p class="failure-story">قفز فريق تحليلي مباشرة إلى بناء نموذج تنبؤي لمعدلات العطل في خط إنتاج. دقة النموذج على بيانات التدريب بلغت 92%. عند النشر الفعلي <span class="en-term">(Deployment)</span>، فشل فشلاً ذريعاً. السبب: 90% من بيانات التدريب كانت من فصل الصيف، وأعطال الجهاز تتوزع بشكل مختلف في الشتاء بسبب تقلبات الحرارة <span class="en-term">(Thermal Variation)</span>. الاستكشاف كان سيكشف ذلك في ساعات.</p>
+      <div class="lesson-box" style="border-color:#66bb6a;background:#f1f8e9;">
+        <div class="lesson-label" style="color:#43a047;">💡 الدرس</div>
+        التحليل الاستكشافي <span class="en-term">(EDA)</span> يكشف التوزيعات غير المتوقعة والأنماط الموسمية <span class="en-term">(Seasonal Patterns)</span> ويُنبّه لتحيز الاختيار <span class="en-term">(Selection Bias)</span> قبل بناء أي نموذج.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 5 failures -->
+  <h3 style="font-weight:800;color:#1565c0;margin:32px 0 16px;font-size:1.1rem;">⑤ إخفاقات المرحلة الخامسة — النمذجة</h3>
+  <div class="failure-card" style="border-color:#bbdefb;">
+    <div class="failure-header" style="background:linear-gradient(135deg,#1976d2,#0d47a1);">
+      <div>
+        <div class="failure-badge">التأمين</div>
+        <div class="failure-title-text">نموذج تنبؤي فشل في الواقع رغم نجاحه في الاختبار</div>
+      </div>
+      <div style="font-size:2rem;margin-right:auto">📉</div>
+    </div>
+    <div class="failure-body" style="background:#f5faff;">
+      <p class="failure-story">بنى فريق تحليل بيانات نموذجاً تنبؤياً لحساب أقساط التأمين. بدا أداءه ممتازاً على بيانات الاختبار الأولية، لكن عند تطبيقه على بيانات عملاء جدد انهار أداؤه تماماً. السبب: أن النموذج كان مُعياراً بشكل مفرط على بيانات التدريب فلم يستطع التعميم. النتيجة: نموذج عديم الفائدة التجارية رغم أدائه الظاهري الممتاز.</p>
+      <div class="lesson-box" style="border-color:#42a5f5;background:#e3f2fd;">
+        <div class="lesson-label" style="color:#1976d2;">💡 الدرس</div>
+        أي نموذج تنبؤي يجب اختباره دائماً على بيانات جديدة لم يُبنَ عليها، وليس فقط على البيانات التي استُخدمت لبنائه. الأداء الجيد في الاختبار الأولي لا يضمن الأداء في الواقع.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 7 failures -->
+  <h3 style="font-weight:800;color:#00695c;margin:32px 0 16px;font-size:1.1rem;">⑦ إخفاقات المرحلة السابعة — التقديم والتواصل</h3>
+  <div class="failure-card" style="border-color:#b2dfdb;">
+    <div class="failure-header" style="background:linear-gradient(135deg,#00897b,#004d40);">
+      <div>
+        <div class="failure-badge">التسويق</div>
+        <div class="failure-title-text">تقرير 80 صفحة لم يُقرأ — The Unread Report</div>
+      </div>
+      <div style="font-size:2rem;margin-right:auto">📑</div>
+    </div>
+    <div class="failure-body" style="background:#f0fffd;">
+      <p class="failure-story">أعدّ فريق متخصص تقريراً تحليلياً متعمقاً من 80 صفحة لمجلس الإدارة حول أسباب تراجع المبيعات. كان مليئاً بالمصطلحات الإحصائية، والمعادلات، والرسوم البيانية المعقدة. ردّ رئيس مجلس الإدارة: «ماذا أفعل بكل هذا؟ أخبرني بثلاثة قرارات يجب أن أتخذها اليوم». التقرير لم يُقرأ ولم يُطبَّق رغم صحة محتواه التحليلية.</p>
+      <div class="lesson-box" style="border-color:#26a69a;background:#e0f2f1;">
+        <div class="lesson-label" style="color:#00897b;">💡 الدرس</div>
+        التحليل الجيد لا يكتمل إلا بتقديم نتائجه بلغة صانع القرار <span class="en-term">(Decision Maker's Language)</span> مع التركيز على التوصيات القابلة للتنفيذ <span class="en-term">(Actionable Recommendations)</span>. المحلل مترجم — لا عالم رياضيات.
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ SECTION 7: GLOSSARY ══════════ -->
+<section id="glossary">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">٧</div>
+    <h2 class="section-title">مسرد <span>المصطلحات</span></h2>
+    <div class="section-line"></div>
+    <p style="color:var(--gray);margin-top:12px;font-size:0.95rem;">Glossary — المصطلحات الأساسية في عالم البيانات</p>
+  </div>
+
+  <div class="glossary-grid">
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Analysis</div>
+      <div class="gloss-ar">تحليل البيانات</div>
+      <div class="gloss-def">عملية فحص البيانات وتنظيفها وتحويلها ونمذجتها بهدف اكتشاف معلومات مفيدة، وتقديم استنتاجات، ودعم القرار. يركز على الإجابة على أسئلة محددة.</div>
+      <span class="gloss-tag">Core Term</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Analytics</div>
+      <div class="gloss-ar">تحليليات البيانات</div>
+      <div class="gloss-def">مصطلح أشمل من «تحليل البيانات»، يشمل التحليل الوصفي والتشخيصي والتنبؤي والتوصيفي. يُركّز أكثر على التطبيق التجاري وتوليد القيمة من البيانات.</div>
+      <span class="gloss-tag">Core Term</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Science</div>
+      <div class="gloss-ar">علم البيانات</div>
+      <div class="gloss-def">حقل متعدد التخصصات يجمع الإحصاء، والبرمجة، وتعلّم الآلة، وخبرة المجال. يذهب أبعد من التحليل نحو بناء النماذج التنبؤية وتطبيقات الذكاء الاصطناعي.</div>
+      <span class="gloss-tag">Broader Field</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Engineering</div>
+      <div class="gloss-ar">هندسة البيانات</div>
+      <div class="gloss-def">بناء وصيانة البنية التحتية للبيانات: أنابيب البيانات (Pipelines)، ومستودعاتها (Data Warehouses)، وبحيراتها (Data Lakes). يُهيّئ البيانات ليستخدمها المحللون.</div>
+      <span class="gloss-tag">Infrastructure</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Business Intelligence (BI)</div>
+      <div class="gloss-ar">ذكاء الأعمال</div>
+      <div class="gloss-def">مجموعة الأدوات والعمليات والممارسات التي تُحوّل البيانات الخام إلى معلومات تجارية قابلة للتنفيذ. يشمل التقارير، لوحات البيانات (Dashboards)، وتحليل الاتجاهات.</div>
+      <span class="gloss-tag">Business</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Dataset</div>
+      <div class="gloss-ar">مجموعة البيانات</div>
+      <div class="gloss-def">مجموعة منظمة من البيانات المتعلقة بموضوع أو هدف محدد، تُخزَّن في جدول، ملف، أو قاعدة بيانات وتستخدم للتحليل أو التدريب.</div>
+      <span class="gloss-tag">Fundamental</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Wrangling / Munging</div>
+      <div class="gloss-ar">معالجة البيانات وإعدادها</div>
+      <div class="gloss-def">عملية تحويل البيانات الخام وإعدادها للتحليل: التنظيف، الدمج، إعادة الهيكلة، والتحويل. قد تستهلك 70-80% من وقت المحلل.</div>
+      <span class="gloss-tag">Process</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Cleaning</div>
+      <div class="gloss-ar">تنظيف البيانات</div>
+      <div class="gloss-def">إزالة أو تصحيح البيانات الخاطئة، المكررة، غير المكتملة، أو غير المتسقة لضمان جودة البيانات قبل التحليل.</div>
+      <span class="gloss-tag">Process</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Descriptive Analytics</div>
+      <div class="gloss-ar">التحليل الوصفي</div>
+      <div class="gloss-def">يصف ما حدث في الماضي باستخدام الإحصاء الوصفي والتصور البياني. يجيب على: «ماذا حدث؟». مثال: تقارير المبيعات الشهرية.</div>
+      <span class="gloss-tag">Analytics Type</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Diagnostic Analytics</div>
+      <div class="gloss-ar">التحليل التشخيصي</div>
+      <div class="gloss-def">يحلل أسباب ما حدث. يجيب على: «لماذا حدث؟». مثال: تحديد أسباب انخفاض المبيعات في منطقة معينة.</div>
+      <span class="gloss-tag">Analytics Type</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Predictive Analytics</div>
+      <div class="gloss-ar">التحليل التنبؤي</div>
+      <div class="gloss-def">استخدام البيانات التاريخية والنماذج الإحصائية للتنبؤ بما سيحدث. يجيب على: «ماذا سيحدث؟». مثال: التنبؤ بإلغاء اشتراك العميل.</div>
+      <span class="gloss-tag">Analytics Type</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Prescriptive Analytics</div>
+      <div class="gloss-ar">التحليل التوصيفي / التوجيهي</div>
+      <div class="gloss-def">يقترح الإجراءات الأفضل بناءً على التنبؤات. يجيب على: «ماذا يجب أن نفعل؟». مثال: توصية بعرض خاص لعميل مُتنبَّأ بإلغائه.</div>
+      <span class="gloss-tag">Analytics Type</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Exploratory Data Analysis (EDA)</div>
+      <div class="gloss-ar">التحليل الاستكشافي للبيانات</div>
+      <div class="gloss-def">مرحلة استكشاف أولية تستخدم الإحصاء الوصفي والتصور البياني لفهم طبيعة البيانات قبل البدء في النمذجة. تُكتشف الأنماط والتوزيعات والعلاقات.</div>
+      <span class="gloss-tag">Process</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Machine Learning (ML)</div>
+      <div class="gloss-ar">التعلم الآلي</div>
+      <div class="gloss-def">فرع من الذكاء الاصطناعي يُمكّن الأنظمة من التعلم من البيانات دون برمجة صريحة. تشمل تطبيقاته: التصنيف، التنبؤ، التجميع، والتوصية.</div>
+      <span class="gloss-tag">Technology</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Artificial Intelligence (AI)</div>
+      <div class="gloss-ar">الذكاء الاصطناعي</div>
+      <div class="gloss-def">المجال الأشمل الذي يشمل أي نظام حاسوبي يُحاكي الذكاء البشري. التعلم الآلي وعلم البيانات فروع منه.</div>
+      <span class="gloss-tag">Technology</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Big Data</div>
+      <div class="gloss-ar">البيانات الضخمة</div>
+      <div class="gloss-def">البيانات التي تتجاوز قدرة أنظمة المعالجة التقليدية في الحجم (Volume)، والسرعة (Velocity)، والتنوع (Variety). تستلزم أدوات خاصة كـ Hadoop و Spark.</div>
+      <span class="gloss-tag">Concept</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Governance</div>
+      <div class="gloss-ar">حوكمة البيانات</div>
+      <div class="gloss-def">الإطار التنظيمي والسياسات والإجراءات التي تضمن جودة البيانات، أمانها، خصوصيتها، والامتثال للأنظمة عبر دورة حياتها الكاملة.</div>
+      <span class="gloss-tag">Management</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Visualization</div>
+      <div class="gloss-ar">تصور البيانات</div>
+      <div class="gloss-def">تمثيل البيانات بشكل بياني وبصري (رسوم بيانية، خرائط، لوحات تفاعلية) لتسهيل فهم الأنماط والاتجاهات والعلاقات والشذوذات.</div>
+      <span class="gloss-tag">Tool</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Pipeline</div>
+      <div class="gloss-ar">أنبوب البيانات</div>
+      <div class="gloss-def">سلسلة من العمليات الآلية تنقل البيانات من مصادرها الأولية عبر مراحل التحويل والتنظيف حتى وجهتها النهائية (مستودع البيانات أو نظام التحليل).</div>
+      <span class="gloss-tag">Infrastructure</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Warehouse</div>
+      <div class="gloss-ar">مستودع البيانات</div>
+      <div class="gloss-def">قاعدة بيانات مركزية مُصمَّمة لتخزين البيانات التاريخية المنظّمة من مصادر متعددة وتسهيل التحليل والاستعلام عنها. أمثلة: Snowflake، Amazon Redshift.</div>
+      <span class="gloss-tag">Infrastructure</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Lake</div>
+      <div class="gloss-ar">بحيرة البيانات</div>
+      <div class="gloss-def">مستودع ضخم يخزّن البيانات بصيغتها الخام الأصلية (منظمة وغير منظمة وشبه منظمة) دون تحديد بنية مسبقاً. مرن لكنه يتطلب معالجة لاستخدامه.</div>
+      <span class="gloss-tag">Infrastructure</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">KPI (Key Performance Indicator)</div>
+      <div class="gloss-ar">مؤشر الأداء الرئيسي</div>
+      <div class="gloss-def">مقياس قابل للقياس يُستخدم لتقييم نجاح المؤسسة أو مشروع معين في تحقيق أهدافه. مثال: معدل التحويل، معدل الاحتفاظ بالعملاء.</div>
+      <span class="gloss-tag">Business</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Feature Engineering</div>
+      <div class="gloss-ar">هندسة الخصائص</div>
+      <div class="gloss-def">عملية إنشاء متغيرات جديدة (Features) من البيانات الأصلية لتحسين أداء النماذج التحليلية. تتطلب خبرة بالمجال وإبداعاً في التحويل.</div>
+      <span class="gloss-tag">Process</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Correlation</div>
+      <div class="gloss-ar">الارتباط</div>
+      <div class="gloss-def">مقياس العلاقة الإحصائية بين متغيرَين. الارتباط لا يعني السببية (Correlation ≠ Causation). يتراوح بين -1 (عكسي تام) و+1 (طردي تام).</div>
+      <span class="gloss-tag">Statistics</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Causal Inference</div>
+      <div class="gloss-ar">التحيز (في البيانات/النماذج)</div>
+      <div class="gloss-def">الانحراف المنهجي في البيانات أو النماذج الذي يجعل النتائج غير عادلة أو غير دقيقة لفئات معينة. أصل التحيز قد يكون في جمع البيانات أو بنية النموذج.</div>
+      <span class="gloss-tag">Critical Concept</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">ETL (Extract, Transform, Load)</div>
+      <div class="gloss-ar">استخراج، تحويل، تحميل</div>
+      <div class="gloss-def">عملية نقل البيانات من مصادرها (استخراج)، وإعادة هيكلتها وتنظيفها (تحويل)، ثم تحميلها إلى مستودع البيانات (تحميل). ركيزة هندسة البيانات.</div>
+      <span class="gloss-tag">Infrastructure</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Dashboard</div>
+      <div class="gloss-ar">لوحة البيانات / لوحة التحكم</div>
+      <div class="gloss-def">واجهة بصرية تفاعلية تُظهر مؤشرات الأداء الرئيسية والبيانات الحيوية في مكان واحد، وتُحدَّث في الوقت الفعلي أو بصفة منتظمة لدعم القرار.</div>
+      <span class="gloss-tag">Tool</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Statistical Significance</div>
+      <div class="gloss-ar">الأهمية الإحصائية</div>
+      <div class="gloss-def">مقياس يُشير إلى احتمال أن تكون نتيجة ما حقيقية وليست نتيجة الصدفة. تُقاس عادةً بـ «قيمة P» (p-value). لا تعني بالضرورة الأهمية العملية.</div>
+      <span class="gloss-tag">Statistics</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data-Driven Decision Making</div>
+      <div class="gloss-ar">القرارات المبنية على البيانات</div>
+      <div class="gloss-def">نهج يعتمد على البيانات والتحليل الموضوعي بدلاً من الحدس أو الخبرة الشخصية المجردة لاتخاذ القرارات الاستراتيجية والتشغيلية.</div>
+      <span class="gloss-tag">Concept</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Actionable Insights</div>
+      <div class="gloss-ar">الرؤى القابلة للتنفيذ</div>
+      <div class="gloss-def">نتائج التحليل التي يمكن ترجمتها مباشرة إلى إجراءات عملية. الهدف النهائي لأي مشروع تحليلي — ليس الإجابة على الأسئلة فحسب، بل توجيه القرارات.</div>
+      <span class="gloss-tag">Outcome</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Open Data</div>
+      <div class="gloss-ar">البيانات المفتوحة</div>
+      <div class="gloss-def">البيانات المتاحة للعموم مجاناً دون قيود تذكر، تُتيحها عادةً الجهات الحكومية أو المنظمات الدولية أو المؤسسات البحثية لتعزيز الشفافية والابتكار.</div>
+      <span class="gloss-tag">Concept</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">API (Application Programming Interface)</div>
+      <div class="gloss-ar">واجهة برمجة التطبيقات</div>
+      <div class="gloss-def">آلية تُمكّن البرامج والأنظمة المختلفة من التواصل وتبادل البيانات. يستخدمها المحللون لجمع البيانات من منصات خارجية كمنصات التواصل الاجتماعي وأنظمة الجهات الحكومية.</div>
+      <span class="gloss-tag">Technology</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Privacy</div>
+      <div class="gloss-ar">خصوصية البيانات</div>
+      <div class="gloss-def">حق الأفراد في التحكم في بياناتهم الشخصية وكيفية استخدامها. يشمل الامتثال للأنظمة كـ GDPR الأوروبي ونظام حماية البيانات الشخصية السعودي.</div>
+      <span class="gloss-tag">Ethics & Law</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Causal Inference</div>
+      <div class="gloss-ar">الاستدلال السببي</div>
+      <div class="gloss-def">تحديد ما إذا كان متغير ما يُسبّب تغيراً في متغير آخر (لا مجرد ارتباط). أصعب وأهم من الارتباط في دعم القرارات الفعّالة.</div>
+      <span class="gloss-tag">Statistics</span>
+    </div>
+
+    <div class="gloss-card">
+      <div class="gloss-en">Data Literacy</div>
+      <div class="gloss-ar">الثقافة البيانية / محو الأمية البياني</div>
+      <div class="gloss-def">القدرة على قراءة البيانات وفهمها والتعامل معها ونقد نتائجها بشكل نقدي — مهارة أساسية لجميع موظفي المؤسسات الحديثة، وليس المحللين فحسب.</div>
+      <span class="gloss-tag">Skill</span>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ══════════ SECTION BI: BUSINESS INTELLIGENCE ══════════ -->
+<section id="bi">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num" style="background:linear-gradient(135deg,#1a237e,#283593);">BI</div>
+    <h2 class="section-title">ذكاء الأعمال <span>(Business Intelligence)</span></h2>
+    <div class="section-line" style="background:linear-gradient(90deg,#1a237e,#3949ab);"></div>
+    <p style="color:var(--gray);margin-top:12px;font-size:0.95rem;">ما هو ذكاء الأعمال وعلاقته بتحليل البيانات؟</p>
+  </div>
+
+  <div class="importance-banner" style="background:linear-gradient(135deg,#1a237e,#283593);">
+    <div class="big-icon">📊</div>
+    <div>
+      <h3>ما هو ذكاء الأعمال؟</h3>
+      <p style="color:rgba(255,255,255,0.85)"><strong>ذكاء الأعمال <span class="en-term">(Business Intelligence — BI)</span></strong> هو مجموعة الأدوات والعمليات والممارسات التي تحوّل البيانات الخام إلى معلومات تجارية ذات معنى تُستخدم لاتخاذ القرارات الاستراتيجية والتشغيلية. يركّز بشكل رئيسي على <strong>ما حدث وما يحدث الآن</strong> — بينما يمتد تحليل البيانات ليشمل أيضاً ما سيحدث ولماذا.</p>
+    </div>
+  </div>
+
+  <!-- BI vs Data Analysis SVG -->
+  <div class="lifecycle-svg-wrapper" style="margin:32px 0;">
+    <svg viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg" font-family="Tajawal, Cairo, sans-serif">
+      <defs>
+        <linearGradient id="bi-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f8f9ff"/><stop offset="100%" stop-color="#eef2ff"/></linearGradient>
+        <linearGradient id="bi-col" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a237e"/><stop offset="100%" stop-color="#283593"/></linearGradient>
+        <linearGradient id="da-col" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a6faf"/><stop offset="100%" stop-color="#0d47a1"/></linearGradient>
+        <linearGradient id="ds-col" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6a1b9a"/><stop offset="100%" stop-color="#4a148c"/></linearGradient>
+      </defs>
+      <rect width="860" height="300" rx="14" fill="url(#bi-bg)"/>
+      <text x="430" y="28" text-anchor="middle" font-size="14" font-weight="900" fill="#0d1b2a">العلاقة بين ذكاء الأعمال وتحليل البيانات وعلم البيانات</text>
+
+      <!-- BI Column -->
+      <rect x="30" y="45" width="240" height="220" rx="12" fill="url(#bi-col)"/>
+      <text x="150" y="72" text-anchor="middle" font-size="13" font-weight="900" fill="white">ذكاء الأعمال</text>
+      <text x="150" y="88" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.75)">Business Intelligence</text>
+      <line x1="50" y1="98" x2="250" y2="98" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="150" y="118" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.9)" font-weight="700">ماذا حدث؟</text>
+      <text x="150" y="138" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.7)">What happened?</text>
+      <text x="150" y="162" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• التقارير والداشبوردات</text>
+      <text x="150" y="180" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• مؤشرات الأداء (KPIs)</text>
+      <text x="150" y="198" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• الاتجاهات التاريخية</text>
+      <text x="150" y="216" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• لوحات المتابعة</text>
+      <text x="150" y="240" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)">أدوات: Power BI، Tableau</text>
+      <text x="150" y="254" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)">Qlik، SSRS</text>
+
+      <!-- DA Column -->
+      <rect x="310" y="45" width="240" height="220" rx="12" fill="url(#da-col)"/>
+      <text x="430" y="72" text-anchor="middle" font-size="13" font-weight="900" fill="white">تحليل البيانات</text>
+      <text x="430" y="88" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.75)">Data Analysis</text>
+      <line x1="330" y1="98" x2="530" y2="98" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="430" y="118" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.9)" font-weight="700">لماذا حدث؟ وماذا سيحدث؟</text>
+      <text x="430" y="138" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.7)">Why? What will happen?</text>
+      <text x="430" y="162" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• تحليل الأسباب الجذرية</text>
+      <text x="430" y="180" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• التحليل الإحصائي</text>
+      <text x="430" y="198" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• التحليل التنبؤي</text>
+      <text x="430" y="216" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• اكتشاف الأنماط</text>
+      <text x="430" y="240" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)">أدوات: Python، R، Excel</text>
+      <text x="430" y="254" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)">SPSS، SAS</text>
+
+      <!-- DS Column -->
+      <rect x="590" y="45" width="240" height="220" rx="12" fill="url(#ds-col)"/>
+      <text x="710" y="72" text-anchor="middle" font-size="13" font-weight="900" fill="white">علم البيانات</text>
+      <text x="710" y="88" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.75)">Data Science</text>
+      <line x1="610" y1="98" x2="810" y2="98" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="710" y="118" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.9)" font-weight="700">كيف نبني نماذج ذكية؟</text>
+      <text x="710" y="138" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.7)">How to build smart models?</text>
+      <text x="710" y="162" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• التعلم الآلي (ML)</text>
+      <text x="710" y="180" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• نماذج الذكاء الاصطناعي</text>
+      <text x="710" y="198" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• البرمجة المتقدمة</text>
+      <text x="710" y="216" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">• الأبحاث والتجريب</text>
+      <text x="710" y="240" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)">أدوات: Python/TensorFlow</text>
+      <text x="710" y="254" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)">Spark، Cloud ML</text>
+
+      <text x="430" y="288" text-anchor="middle" font-size="9.5" fill="#546e7a">ذكاء الأعمال وتحليل البيانات وجهان لعملة واحدة — ذكاء الأعمال يُجيب «ماذا» والتحليل يُجيب «لماذا وماذا سيحدث»</text>
+    </svg>
+  </div>
+
+  <h3 style="font-weight:800;color:var(--navy);margin:32px 0 16px;font-size:1.2rem;">العلاقة بين ذكاء الأعمال وتحليل البيانات</h3>
+
+  <p>يعمل ذكاء الأعمال وتحليل البيانات معاً في منظومة متكاملة — فهما ليسا متنافسَين بل مُتكاملَين:</p>
+
+  <div class="domains-grid" style="margin-top:16px;">
+    <div class="domain-card" style="border-right:4px solid #1a237e;">
+      <span class="domain-icon">📈</span>
+      <div class="domain-title">ما يفعله ذكاء الأعمال</div>
+      <div class="domain-text">يُجمّع البيانات من مصادر متعددة ويعرضها في لوحات تحكم <span class="en-term">(Dashboards)</span> تُظهر الوضع الحالي والتاريخي. يجيب على: «كم بلغت مبيعات الشهر الماضي؟» و«ما أداء كل فرع هذا الربع؟»<br><br><strong>مثال:</strong> لوحة تحكم يومية لمدير المبيعات تُظهر إجمالي الطلبات والإيراد وأداء الفريق.</div>
+    </div>
+    <div class="domain-card" style="border-right:4px solid #1a6faf;">
+      <span class="domain-icon">🔍</span>
+      <div class="domain-title">ما يُضيفه تحليل البيانات</div>
+      <div class="domain-text">يذهب أبعد ليُجيب على «لماذا انخفضت المبيعات؟» و«أي العملاء من المرجح أن يغادروا؟» و«ما السبب الجذري للمشكلة؟»<br><br><strong>مثال:</strong> تحليل يُظهر أن انخفاض مبيعات منتج معين يرتبط بانخفاض تقييماته على الإنترنت — وليس بالسعر كما كان مفترَضاً.</div>
+    </div>
+    <div class="domain-card" style="border-right:4px solid #009688;">
+      <span class="domain-icon">🤝</span>
+      <div class="domain-title">كيف يعملان معاً</div>
+      <div class="domain-text">ذكاء الأعمال يُنبّه: «المبيعات انخفضت 15%» — وتحليل البيانات يُجيب: «لأن العملاء في منطقة الشمال يُلغون الطلبات بعد يوم من التسليم بسبب مشكلة في التعبئة».<br><br>معاً يُشكّلان حلقة متكاملة من الرصد إلى الفهم إلى القرار.</div>
+    </div>
+  </div>
+
+  <div class="quote-block" style="margin-top:24px;">
+    <p class="quote-text">«ذكاء الأعمال يُخبرك بما حدث في الماضي والحاضر. تحليل البيانات يُخبرك بلماذا حدث وما الذي سيحدث. كلاهما ضروري لاتخاذ قرار مكتمل.»</p>
+    <div class="quote-source">— مبدأ عملي في إدارة الأداء المؤسسي</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ SECTION SKILLS: ANALYST SKILLS ══════════ -->
+<section id="skills" style="background:#f4f8fd;">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num" style="background:linear-gradient(135deg,#00695c,#004d40);">🎓</div>
+    <h2 class="section-title">مهارات <span>محلل البيانات</span></h2>
+    <div class="section-line" style="background:linear-gradient(90deg,#00695c,#26a69a);"></div>
+    <p style="color:var(--gray);margin-top:12px;font-size:0.95rem;">ما الذي يجعل المحلل ناجحاً فعلاً؟ — ما هو أكثر من مجرد إتقان الأدوات</p>
+  </div>
+
+  <div class="importance-banner" style="background:linear-gradient(135deg,#004d40,#00695c);">
+    <div class="big-icon">⚠️</div>
+    <div>
+      <h3>تحذير مهم: الأداة لا تصنع المحلل</h3>
+      <p style="color:rgba(255,255,255,0.85)">الاعتماد المفرط على الأدوات والبرمجيات دون فهم عميق للمبادئ الأساسية هو <strong>أحد أخطر أسباب فشل مشاريع تحليل البيانات</strong>. الأداة تُسرّع العمل — لكنها لا تُفكّر عنك ولا تُصحّح سوء الفهم.</p>
+    </div>
+  </div>
+
+  <!-- Skills grid -->
+  <div class="domains-grid" style="margin-top:32px;">
+
+    <div class="domain-card" style="border-right:4px solid #1565c0;">
+      <span class="domain-icon">📐</span>
+      <div class="domain-title">الرياضيات والإحصاء <span class="en-term">(Mathematics & Statistics)</span></div>
+      <div class="domain-text">
+        <strong>لماذا ضروريان؟</strong> الإحصاء ليس مجرد أرقام — بل هو لغة التفكير في عدم اليقين. فهمك للتوزيعات، والفرضيات، والارتباط، يُحدد ما إذا كانت نتائجك موثوقة أم مجرد مصادفة.<br><br>
+        <strong>مثال على الفشل:</strong> محلل طلع بنتيجة: «المنتج A أفضل من المنتج B بفارق 3%» دون اختبار إحصائي. الفارق كان في حدود الخطأ الإحصائي (±5%) ولم يكن ذا دلالة — قرار المنتج بُني على مصادفة.
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-right:4px solid #2e7d32;">
+      <span class="domain-icon">🧩</span>
+      <div class="domain-title">التفكير التحليلي والنقدي <span class="en-term">(Analytical & Critical Thinking)</span></div>
+      <div class="domain-text">
+        <strong>لماذا ضروريان؟</strong> الأداة تُعطيك رقماً — لكن عقلك هو من يُقرر هل هذا الرقم منطقي، هل المقاربة صحيحة، وهل السؤال الذي تُجيب عليه هو فعلاً السؤال الصحيح.<br><br>
+        <strong>مثال على الفشل:</strong> محلل وجد ارتباطاً بين ارتفاع مبيعات الآيس كريم وارتفاع معدل الغرق في البحر صيفاً. الأداة لم تُخطئ — لكن التفكير النقدي يقول: «المتغير المخفي هو ارتفاع درجات الحرارة». الارتباط لا يعني السببية.
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-right:4px solid #e65100;">
+      <span class="domain-icon">🏢</span>
+      <div class="domain-title">فهم سياق الأعمال <span class="en-term">(Business Domain Knowledge)</span></div>
+      <div class="domain-text">
+        <strong>لماذا ضروري؟</strong> البيانات ليس لها معنى خارج سياقها. محلل بيانات في المستشفى لا يعرف الفرق بين «القبول الطارئ» و«القبول الاختياري» سيصل إلى استنتاجات خاطئة رغم صحة حساباته.<br><br>
+        <strong>مثال حقيقي:</strong> محلل بيانات في شركة تأمين كهرباء رأى ارتفاعاً مفاجئاً في بيانات أعطال شهر يناير وحَكم بأن هناك أزمة. المتخصص أوضح: هذا هو الوقت المعتاد لإيقاف المولدات للصيانة الدورية السنوية — ليس عطلاً.
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-right:4px solid #6a1b9a;">
+      <span class="domain-icon">📢</span>
+      <div class="domain-title">التواصل وتقديم النتائج <span class="en-term">(Communication & Storytelling)</span></div>
+      <div class="domain-text">
+        <strong>لماذا ضروري؟</strong> التحليل الممتاز الذي لا يُفهم = تحليل فاشل. القدرة على تحويل الأرقام إلى قصة تُقنع صانع القرار هي الفرق بين المحلل الذي يُحدث أثراً والمحلل الذي يُنتج تقارير لا تُقرأ.<br><br>
+        <strong>مثال:</strong> فريق تحليل في شركة طيران أثبت إحصائياً أن تغيير جدول رحلة معينة يوفّر 2.3 مليون دولار سنوياً. رُفض التقرير لأنه كان 60 صفحة من الإحصاء. أُعيد تقديمه في شريحتَين بصريتَين — واعتُمد في اليوم ذاته.
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-right:4px solid #00838f;">
+      <span class="domain-icon">🔍</span>
+      <div class="domain-title">الفضول وطرح الأسئلة الصحيحة <span class="en-term">(Curiosity & Questioning)</span></div>
+      <div class="domain-text">
+        <strong>لماذا ضروريان؟</strong> أفضل المحللين لا يكتفون بالسؤال المطروح عليهم — يسألون: «هل هذا هو السؤال الصحيح أصلاً؟» و«ماذا لو نظرنا من زاوية مختلفة؟»<br><br>
+        <strong>مثال:</strong> طُلب من محلل تحسين معدل التحويل في صفحة الدفع. بدلاً من تحسين زر الدفع، سأل: «لماذا يصل العملاء إلى صفحة الدفع أصلاً ثم يتراجعون؟» — واكتشف أن السبب هو غياب خيار الدفع بتحويل بنكي للعملاء المؤسسيين.
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-right:4px solid #c62828;">
+      <span class="domain-icon">⚖️</span>
+      <div class="domain-title">الأمانة والأخلاق في البيانات <span class="en-term">(Data Ethics & Integrity)</span></div>
+      <div class="domain-text">
+        <strong>لماذا ضروريتان؟</strong> البيانات يمكن تشكيلها لتقول ما تريد إذا اخترت الفترة الزمنية أو المقياس بشكل انتقائي. المحلل المحترف يُلتزم بتقديم الصورة الكاملة حتى لو لم تعجب صاحب القرار.<br><br>
+        <strong>مثال حقيقي:</strong> ضُغط على محلل في شركة دوائية لحذف بيانات المرضى الذين لم يستجيبوا للدواء من الدراسة السريرية. رفض — وكشف لاحقاً أن الدواء أقل فاعلية مما أُعلن. الأمانة حمته قانونياً ومهنياً.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tools vs Skills warning -->
+  <h3 style="font-weight:800;color:#b71c1c;margin:40px 0 20px;font-size:1.2rem;">⚠️ خطر الاعتماد المفرط على الأدوات</h3>
+
+  <p>تجعل الأدوات الحديثة من السهل جداً توليد مخططات ونتائج تبدو احترافية — لكنها قد تكون خاطئة تماماً إذا غاب الفهم الأساسي. وفيما يلي أمثلة حقيقية:</p>
+
+  <div class="failure-card" style="margin-top:16px;">
+    <div class="failure-header">
+      <div><div class="failure-badge">أداة Power BI</div>
+      <div class="failure-title-text">لوحة تحكم جميلة — قرار كارثي</div></div>
+      <div style="font-size:2rem;margin-right:auto">💻</div>
+    </div>
+    <div class="failure-body">
+      <p class="failure-story">بنى فريق مالي في شركة عقارية لوحة تحكم متطورة في Power BI لمتابعة الأداء. بدت النتائج إيجابية — نمو مستمر في الإيرادات. اتُّخذ قرار بتوسعة كبيرة. بعد 6 أشهر تبيّن أن اللوحة كانت تُقارن الإيراد الفعلي بالميزانية المعدّلة (المخفّضة) وليس الأصلية — خطأ في إعداد البيانات لم يُلاحَظ لأن الفريق ركّز على جمال العرض لا صحة البيانات المُدخَلة.</p>
+      <div class="lesson-box"><div class="lesson-label">💡 الدرس</div>الأداة لا تُعوّض عن التحقق من صحة البيانات المُدخَلة. مبدأ GIGO (Garbage In — Garbage Out) ينطبق على أجمل لوحات التحكم.</div>
+    </div>
+  </div>
+
+  <div class="failure-card" style="margin-top:14px;">
+    <div class="failure-header">
+      <div><div class="failure-badge">نتائج إحصائية آلية</div>
+      <div class="failure-title-text">حين تُنتج الأداة نتيجة «ذات دلالة» دون سياق</div></div>
+      <div style="font-size:2rem;margin-right:auto">📊</div>
+    </div>
+    <div class="failure-body">
+      <p class="failure-story">استخدم باحث أداة إحصائية آلية لتحليل بيانات 500,000 مريض. أنتجت الأداة نتيجة بـ «p-value = 0.003» — ذات دلالة إحصائية قوية جداً. بنى الباحث توصيات طبية على هذا الأساس. لاحقاً اكتشف أن قاعدة البيانات الضخمة جداً تجعل أي فرق صغير جداً يظهر «ذا دلالة إحصائية» حتى لو كان غير ذي أهمية سريرية عملياً. فرق 0.2 ملم/زئبق في ضغط الدم كان «ذا دلالة إحصائية» لكنه عديم الأهمية طبياً.</p>
+      <div class="lesson-box"><div class="lesson-label">💡 الدرس</div>الأهمية الإحصائية <span class="en-term">(Statistical Significance)</span> ليست مرادفاً للأهمية العملية <span class="en-term">(Practical Significance)</span>. فهم الفرق يتطلب معرفة — لا مجرد أداة.</div>
+    </div>
+  </div>
+
+  <div class="importance-banner" style="background:linear-gradient(135deg,#00695c,#004d40);margin-top:32px;">
+    <div class="big-icon">🏆</div>
+    <div>
+      <h3>المحلل الناجح = مهارات أساسية + أدوات مناسبة</h3>
+      <p style="color:rgba(255,255,255,0.85)">الأداة مُضخّم — تُضخّم مهاراتك الجيدة وتُضخّم أخطاءك معاً. المحلل الذي يفهم الإحصاء والسياق والأعمال سيُنتج نتائج قيّمة حتى لو استخدم Excel فقط. والمحلل الذي يفتقر لهذه المهارات سيُنتج أخطاء متطورة المظهر بأغلى الأدوات.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-author">المهندس عبدالله عبد الملك سلام</div>
+  <p>متخصص في التحليلات وذكاء الأعمال · Business Intelligence & Analytics</p>
+  <div style="margin:12px 0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center;">
+    <a href="#" title="X (Twitter)" style="color:white;font-size:1.2rem;text-decoration:none;">𝕏</a> &nbsp;|&nbsp;
+    <a href="#" title="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="#a8d8ff" style="vertical-align:middle"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a> &nbsp;|&nbsp;
+    <a href="#" title="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="#a8d8ff" style="vertical-align:middle"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+  </div>
+  <p style="margin-top:8px;font-size:0.8rem;color:rgba(255,255,255,0.4);">مذكرة تدريبية في تحليل البيانات · جميع المصطلحات مُترجَمة مع الإنجليزية بين قوسين</p>
+</footer>
+
+<script>
+// Active nav on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
