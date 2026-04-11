@@ -609,13 +609,78 @@ p { margin-bottom: 14px; line-height: 1.9; }
 .importance-banner h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
 .importance-banner p { color: rgba(255,255,255,0.8); font-size: 0.95rem; margin: 0; }
 
+/* ── SVG SCROLL WRAPPER ── */
+.svg-scroll-outer {
+  position: relative;
+  margin: 0 -24px; /* bleed to section edges on mobile */
+}
+.svg-scroll-hint {
+  display: none;
+  text-align: center;
+  font-size: 11px;
+  color: var(--gray);
+  padding: 6px 0 2px;
+  letter-spacing: 0.5px;
+}
+.svg-scroll-hint::before { content: '← '; }
+.svg-scroll-hint::after  { content: ' →'; }
+
+.lifecycle-svg-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  padding: 0 24px;   /* restore horizontal padding inside scroller */
+}
+.lifecycle-svg-wrapper::-webkit-scrollbar { height: 4px; }
+.lifecycle-svg-wrapper::-webkit-scrollbar-track { background: transparent; }
+.lifecycle-svg-wrapper::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.anatomy-svg-box {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.anatomy-svg-box::-webkit-scrollbar { height: 4px; }
+.anatomy-svg-box::-webkit-scrollbar-track { background: transparent; }
+.anatomy-svg-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* keep SVGs at their authored width so annotations stay intact */
+.lifecycle-svg-wrapper svg { min-width: 660px; display: block; }
+.anatomy-svg-box      svg { min-width: 700px; display: block; }
+
+/* ── PRIMARY/SECONDARY DATA GRID ── */
+.data-type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+
+/* ── MOBILE ── */
 @media (max-width: 640px) {
   .hero h1 { font-size: 1.8rem; }
   .author-card { flex-direction: column; text-align: center; }
   .smart-grid { grid-template-columns: repeat(3, 1fr); }
   .domains-grid { grid-template-columns: 1fr; }
-  .lifecycle-svg-wrapper svg { min-width: 650px; }
-  .anatomy-svg-box svg { min-width: 680px; }
+  .glossary-grid { grid-template-columns: 1fr; }
+  .anatomy-terms-grid { grid-template-columns: 1fr; }
+  .importance-grid { grid-template-columns: 1fr; }
+
+  /* show scroll hint on mobile */
+  .svg-scroll-hint { display: block; }
+
+  /* stack primary/secondary grid vertically */
+  .data-type-grid { grid-template-columns: 1fr; }
+
+  /* tighten section padding */
+  section { padding: 40px 0; }
+  .container { padding: 0 16px; }
+
+  /* phase cards full-bleed */
+  .phase-header { padding: 16px 18px; }
+  .phase-body   { padding: 0 18px 18px; }
 }
 </style>
 </head>
@@ -657,6 +722,7 @@ p { margin-bottom: 14px; line-height: 1.9; }
     <a href="#intro" class="nav-link">المقدمة</a>
     <a href="#definition" class="nav-link">التعريف</a>
     <a href="#lifecycle" class="nav-link">دورة الحياة</a>
+    <a href="#pipeline" class="nav-link">خط الأنابيب</a>
     <a href="#anatomy" class="nav-link">تشريح البيانات</a>
     <a href="#importance" class="nav-link">أهمية المراحل</a>
     <a href="#failures" class="nav-link">أمثلة الإخفاقات</a>
@@ -1124,7 +1190,7 @@ p { margin-bottom: 14px; line-height: 1.9; }
       <div class="phase-body">
         <p class="phase-desc">جمع البيانات من مصادرها المختلفة. تنقسم البيانات أولاً حسب مصدر جمعها إلى نوعين رئيسيين، ثم حسب بنيتها:</p>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;">
+        <div class="data-type-grid">
           <div style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:14px;">
             <div style="font-weight:800;color:#2e7d32;margin-bottom:6px;">📋 بيانات أولية <span class="en-term">(Primary Data)</span></div>
             <div style="font-size:0.88rem;color:#388e3c;">تُجمَع لأول مرة من المصدر مباشرة لغرض التحليل الحالي. أدق وأكثر ملاءمة لكنها تستهلك وقتاً وتكلفة أعلى.<br><br>
@@ -1141,8 +1207,8 @@ p { margin-bottom: 14px; line-height: 1.9; }
         <ul class="steps-list">
           <li><span class="step-dot"></span>بيانات داخلية <span class="en-term">(Internal Data)</span>: قواعد بيانات المؤسسة، أنظمة ERP، سجلات المبيعات.</li>
           <li><span class="step-dot orange"></span>بيانات خارجية <span class="en-term">(External Data)</span>: تقارير السوق، بيانات مفتوحة <span class="en-term">(Open Data)</span>، بيانات الجهات الحكومية.</li>
-          <li><span class="step-dot green"></span>بيانات منظمة <span class="en-term">(Structured)</span>: جداول وقواعد بيانات علائقية.</li>
-          <li><span class="step-dot red"></span>بيانات غير منظمة <span class="en-term">(Unstructured)</span>: نصوص، صور، تسجيلات صوتية.</li>
+          <li><span class="step-dot green"></span>بيانات مُهَيكلة <span class="en-term">(Structured)</span>: جداول وقواعد بيانات علائقية.</li>
+          <li><span class="step-dot red"></span>بيانات غير مُهَيكلة <span class="en-term">(Unstructured)</span>: نصوص، صور، تسجيلات صوتية.</li>
         </ul>
         <div class="example-box">
           <div class="example-label">💼 مثال تطبيقي — مشروع الاتصالات</div>
@@ -1270,6 +1336,182 @@ p { margin-bottom: 14px; line-height: 1.9; }
       </div>
     </div>
 
+  </div>
+</div>
+</section>
+
+<!-- ══════════ SECTION: DATA PIPELINE ══════════ -->
+<section id="pipeline">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num" style="background:linear-gradient(135deg,#00695c,#00897b);">🔁</div>
+    <h2 class="section-title">خط أنابيب <span>البيانات</span></h2>
+    <div class="section-line" style="background:linear-gradient(90deg,#00695c,#26a69a);"></div>
+    <p style="color:var(--gray);margin-top:12px;font-size:0.95rem;">Data Pipeline Flow — كيف تتدفق البيانات من مصادرها إلى القرار</p>
+  </div>
+
+  <h3 style="font-weight:800;color:var(--navy);margin:0 0 14px;font-size:1.15rem;">ما هو خط أنابيب البيانات؟</h3>
+  <p>خط أنابيب البيانات <span class="en-term">(Data Pipeline)</span> هو المسار المنظّم الذي تسلكه البيانات من مصادرها الخام حتى تصل إلى المحلل أو نظام اتخاذ القرار جاهزةً للاستخدام. تماماً كأنبوب المياه الذي ينقل الماء من منبعه إلى الصنبور — خط أنابيب البيانات ينقل البيانات من مصادرها المتفرقة إلى مكان مركزي نظيف ومُرتّب.</p>
+
+  <p>يُشكّل خط الأنابيب <strong>العمود الفقري التقني</strong> لأي مشروع تحليل بيانات أو ذكاء أعمال. بدونه تظل البيانات مبعثرة في أنظمة متفرقة — ومعه تصبح مادةً منظّمة قابلة للتحليل والاستثمار.</p>
+
+  <div class="quote-block" style="margin:20px 0 28px;">
+    <p class="quote-text">«خط الأنابيب ليس غاية في حد ذاته — هو خادم للسؤال التجاري. ابدأ دائماً بالسؤال، ثم اصمم الخط الذي يُجيب عليه.»</p>
+    <div class="quote-source">— مبدأ عملي في هندسة البيانات</div>
+  </div>
+
+  <!-- Pipeline SVG -->
+  <div class="lifecycle-svg-wrapper" style="margin:8px 0 32px;">
+<svg width="100%" viewBox="0 0 680 540" role="img" font-family="Tajawal, Cairo, sans-serif">
+  <title>تدفق خط أنابيب البيانات</title>
+  <desc>مخطط يوضح المراحل الخمس لخط أنابيب البيانات</desc>
+  <defs>
+    <linearGradient id="pip-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8fbff"/>
+      <stop offset="100%" stop-color="#eef6f0"/>
+    </linearGradient>
+    <marker id="pip-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="680" height="540" rx="16" fill="url(#pip-bg)"/>
+
+  <!-- ══ Stage 1 — Extract ══ -->
+  <rect x="30" y="40" width="130" height="120" rx="12" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.8"/>
+  <text x="95" y="88" text-anchor="middle" font-size="34">⛏️</text>
+  <text x="95" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#085041">الاستخراج</text>
+  <text x="95" y="142" text-anchor="middle" font-size="11" fill="#0f6e56">Extract</text>
+
+  <text x="52"  y="180" text-anchor="middle" font-size="13">🗄️</text>
+  <text x="52"  y="196" text-anchor="middle" font-size="11" fill="#546e7a">قواعد</text>
+  <text x="52"  y="210" text-anchor="middle" font-size="11" fill="#546e7a">بيانات</text>
+
+  <text x="95"  y="180" text-anchor="middle" font-size="13">📁</text>
+  <text x="95"  y="196" text-anchor="middle" font-size="11" fill="#546e7a">ملفات</text>
+
+  <text x="138" y="180" text-anchor="middle" font-size="13">🔌</text>
+  <text x="138" y="196" text-anchor="middle" font-size="11" fill="#546e7a">API /</text>
+  <text x="138" y="210" text-anchor="middle" font-size="11" fill="#546e7a">مستشعرات</text>
+
+  <line x1="161" y1="100" x2="189" y2="100" stroke="#90a4ae" stroke-width="2" marker-end="url(#pip-arrow)"/>
+
+  <!-- ══ Stage 2 — Transform ══ -->
+  <rect x="193" y="40" width="130" height="120" rx="12" fill="#eeedfe" stroke="#534ab7" stroke-width="0.8"/>
+  <text x="258" y="88" text-anchor="middle" font-size="34">⚙️</text>
+  <text x="258" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#26215c">التحويل</text>
+  <text x="258" y="142" text-anchor="middle" font-size="11" fill="#534ab7">Transform</text>
+
+  <text x="215" y="180" text-anchor="middle" font-size="13">🚫</text>
+  <text x="215" y="196" text-anchor="middle" font-size="11" fill="#546e7a">قيم</text>
+  <text x="215" y="210" text-anchor="middle" font-size="11" fill="#546e7a">مفقودة</text>
+
+  <text x="258" y="180" text-anchor="middle" font-size="13">📐</text>
+  <text x="258" y="196" text-anchor="middle" font-size="11" fill="#546e7a">توحيد</text>
+  <text x="258" y="210" text-anchor="middle" font-size="11" fill="#546e7a">الصيغ</text>
+
+  <text x="301" y="180" text-anchor="middle" font-size="13">🎯</text>
+  <text x="301" y="196" text-anchor="middle" font-size="11" fill="#546e7a">معالجة</text>
+  <text x="301" y="210" text-anchor="middle" font-size="11" fill="#546e7a">الشواذ</text>
+
+  <line x1="324" y1="100" x2="352" y2="100" stroke="#90a4ae" stroke-width="2" marker-end="url(#pip-arrow)"/>
+
+  <!-- ══ Stage 3 — Load ══ -->
+  <rect x="356" y="40" width="130" height="120" rx="12" fill="#faeeda" stroke="#854f0b" stroke-width="0.8"/>
+  <text x="421" y="88" text-anchor="middle" font-size="34">🏗️</text>
+  <text x="421" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#412402">التحميل</text>
+  <text x="421" y="142" text-anchor="middle" font-size="11" fill="#854f0b">Load</text>
+
+  <text x="390" y="180" text-anchor="middle" font-size="13">🏢</text>
+  <text x="390" y="196" text-anchor="middle" font-size="11" fill="#546e7a">مستودع</text>
+  <text x="390" y="210" text-anchor="middle" font-size="11" fill="#546e7a">البيانات</text>
+
+  <text x="454" y="180" text-anchor="middle" font-size="13">🏞️</text>
+  <text x="454" y="196" text-anchor="middle" font-size="11" fill="#546e7a">بحيرة</text>
+  <text x="454" y="210" text-anchor="middle" font-size="11" fill="#546e7a">البيانات</text>
+
+  <line x1="487" y1="100" x2="515" y2="100" stroke="#90a4ae" stroke-width="2" marker-end="url(#pip-arrow)"/>
+
+  <!-- ══ Stage 4 — Analyze ══ -->
+  <rect x="519" y="40" width="130" height="120" rx="12" fill="#e6f1fb" stroke="#185fa5" stroke-width="0.8"/>
+  <text x="584" y="88" text-anchor="middle" font-size="34">🔬</text>
+  <text x="584" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#042c53">التحليل</text>
+  <text x="584" y="142" text-anchor="middle" font-size="11" fill="#185fa5">Analyze</text>
+
+  <text x="551" y="180" text-anchor="middle" font-size="13">📊</text>
+  <text x="551" y="196" text-anchor="middle" font-size="11" fill="#546e7a">إحصاء</text>
+  <text x="551" y="210" text-anchor="middle" font-size="11" fill="#546e7a">وصفي</text>
+
+  <text x="617" y="180" text-anchor="middle" font-size="13">🔮</text>
+  <text x="617" y="196" text-anchor="middle" font-size="11" fill="#546e7a">تحليل</text>
+  <text x="617" y="210" text-anchor="middle" font-size="11" fill="#546e7a">تنبؤي</text>
+
+  <!-- ETL bracket -->
+  <rect x="30" y="228" width="456" height="18" rx="4" fill="none" stroke="#90a4ae" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <text x="258" y="237" text-anchor="middle" font-size="11" fill="#546e7a">◄ ETL — استخراج · تحويل · تحميل ►</text>
+
+  <!-- arrow 4 curves down to stage 5 -->
+  <path d="M584 162 Q584 278 425 290" fill="none" stroke="#90a4ae" stroke-width="1.5" marker-end="url(#pip-arrow)"/>
+
+  <!-- ══ Stage 5 — Dashboard ══ -->
+  <rect x="220" y="290" width="244" height="134" rx="12" fill="#faece7" stroke="#993c1d" stroke-width="0.8"/>
+  <!-- screen frame -->
+  <rect x="236" y="302" width="212" height="90" rx="6" fill="none" stroke="#993c1d" stroke-width="0.8" stroke-opacity="0.5"/>
+  <!-- header bar -->
+  <rect x="236" y="302" width="212" height="16" rx="6" fill="#d85a30" fill-opacity="0.35"/>
+  <circle cx="248" cy="310" r="3" fill="#d85a30" fill-opacity="0.6"/>
+  <circle cx="258" cy="310" r="3" fill="#d85a30" fill-opacity="0.6"/>
+  <circle cx="268" cy="310" r="3" fill="#d85a30" fill-opacity="0.6"/>
+  <text x="380" y="314" text-anchor="middle" font-size="9" fill="#993c1d">Dashboard · لوحة المتابعة</text>
+  <!-- bars -->
+  <rect x="248" y="368" width="14" height="18" rx="2" fill="#d85a30" fill-opacity="0.55"/>
+  <rect x="248" y="354" width="14" height="32" rx="2" fill="#d85a30" fill-opacity="0.55"/>
+  <rect x="266" y="347" width="14" height="39" rx="2" fill="#d85a30" fill-opacity="0.75"/>
+  <rect x="284" y="358" width="14" height="28" rx="2" fill="#d85a30" fill-opacity="0.55"/>
+  <rect x="302" y="343" width="14" height="43" rx="2" fill="#d85a30" fill-opacity="0.9"/>
+  <!-- KPI boxes -->
+  <rect x="330" y="322" width="48" height="20" rx="4" fill="#d85a30" fill-opacity="0.2" stroke="#993c1d" stroke-width="0.5"/>
+  <text x="354" y="332" text-anchor="middle" font-size="9" fill="#712b13">↑ 18%</text>
+  <rect x="384" y="322" width="58" height="20" rx="4" fill="#d85a30" fill-opacity="0.2" stroke="#993c1d" stroke-width="0.5"/>
+  <text x="413" y="332" text-anchor="middle" font-size="9" fill="#712b13">94 عميل</text>
+  <!-- line chart -->
+  <polyline points="330,372 346,362 362,365 378,354 394,358 410,348 426,351" fill="none" stroke="#d85a30" stroke-width="1.5" stroke-opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- label -->
+  <text x="342" y="408" text-anchor="middle" font-size="13" font-weight="700" fill="#4a1b0c">التصور والتقرير</text>
+  <text x="342" y="424" text-anchor="middle" font-size="11" fill="#993c1d">Visualize &amp; Report</text>
+
+  <!-- arrow 5 → decision -->
+  <line x1="342" y1="426" x2="342" y2="454" stroke="#90a4ae" stroke-width="1.5" marker-end="url(#pip-arrow)"/>
+
+  <!-- ══ Decision ══ -->
+  <rect x="218" y="458" width="248" height="32" rx="8" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.8"/>
+  <text x="276" y="475" text-anchor="middle" font-size="17">📄💡</text>
+  <text x="378" y="475" text-anchor="middle" font-size="13" font-weight="700" fill="#2c2c2a">قرار مدروس</text>
+
+  <!-- Feedback loop -->
+  <path d="M218 474 Q30 474 30 164" fill="none" stroke="#90a4ae" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#pip-arrow)"/>
+  <text x="17" y="348" text-anchor="middle" font-size="11" fill="#90a4ae">↻</text>
+  <text x="17" y="364" text-anchor="middle" font-size="11" fill="#90a4ae">تغذية</text>
+  <text x="17" y="380" text-anchor="middle" font-size="11" fill="#90a4ae">راجعة</text>
+</svg>
+  </div>
+
+  <h3 style="font-weight:800;color:var(--navy);margin:0 0 16px;font-size:1.15rem;">علاقة خط الأنابيب بتحليل البيانات</h3>
+  <div class="importance-grid" style="margin-top:0;">
+    <div class="imp-card">
+      <div class="imp-icon">🔗</div>
+      <div class="imp-title">الخط يُهيّئ — التحليل يُجيب</div>
+      <div class="imp-text">خط الأنابيب يجمع البيانات وينظّفها ويضعها في المكان الصحيح. التحليل هو الذي يطرح الأسئلة ويستخلص الإجابات. الاثنان متلازمان — بدون خط أنابيب سليم، يُحلّل المحلل بيانات خاطئة أو ناقصة.</div>
+    </div>
+    <div class="imp-card">
+      <div class="imp-icon">♻️</div>
+      <div class="imp-title">دورة مستمرة لا خطوات منتهية</div>
+      <div class="imp-text">القرار المدروس يُولّد أسئلة جديدة — فتعود الدورة من البداية. لذا يُصمَّم خط الأنابيب الجيد ليكون <strong>قابلاً للتحديث والتوسعة</strong> مع تطور احتياجات العمل.</div>
+    </div>
+    <div class="imp-card">
+      <div class="imp-icon">⚠️</div>
+      <div class="imp-title">جودة الخط = جودة النتيجة</div>
+      <div class="imp-text">خط أنابيب يجمع بيانات خاطئة أو يُهمل خطوة التنظيف يُنتج تحليلاً خاطئاً حتى لو كانت الأساليب التحليلية مثالية. مبدأ GIGO ينطبق هنا بالكامل.</div>
+    </div>
   </div>
 </div>
 </section>
@@ -2207,7 +2449,7 @@ p { margin-bottom: 14px; line-height: 1.9; }
 </footer>
 
 <script>
-// Active nav on scroll
+// ── Active nav on scroll ──
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-link');
 const observer = new IntersectionObserver((entries) => {
@@ -2220,6 +2462,52 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 sections.forEach(s => observer.observe(s));
+
+// ── Mobile: inject scroll hints above wide SVG containers ──
+function injectScrollHints() {
+  if (window.innerWidth > 700) return; // desktop: no hints needed
+
+  const selectors = ['.lifecycle-svg-wrapper', '.anatomy-svg-box'];
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      // Only add hint if content overflows
+      if (el.scrollWidth > el.clientWidth + 10) {
+        // Avoid duplicate hints
+        if (el.previousElementSibling && el.previousElementSibling.classList.contains('svg-scroll-hint')) return;
+        const hint = document.createElement('p');
+        hint.className = 'svg-scroll-hint';
+        hint.textContent = 'اسحب للتمرير';
+        el.parentNode.insertBefore(hint, el);
+      }
+    });
+  });
+}
+
+// ── Mobile: add negative margin to SVG wrappers so they bleed edge-to-edge ──
+function fixSvgMargins() {
+  if (window.innerWidth > 700) return;
+  const container = document.querySelector('.container');
+  if (!container) return;
+  const pad = parseInt(getComputedStyle(container).paddingLeft) || 16;
+
+  document.querySelectorAll('.lifecycle-svg-wrapper, .anatomy-svg-box').forEach(el => {
+    el.style.marginLeft  = `-${pad}px`;
+    el.style.marginRight = `-${pad}px`;
+    el.style.paddingLeft  = `${pad}px`;
+    el.style.paddingRight = `${pad}px`;
+    el.style.borderRadius = '0';
+  });
+}
+
+// Run after layout settles
+window.addEventListener('load', () => {
+  fixSvgMargins();
+  injectScrollHints();
+});
+window.addEventListener('resize', () => {
+  fixSvgMargins();
+  injectScrollHints();
+});
 </script>
 </body>
 </html>
